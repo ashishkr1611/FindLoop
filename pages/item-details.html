@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item Details — FindLoop</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div style="padding: 1.5rem; border-bottom: 1px solid var(--border-dark);">
+        <a href="dashboard.html" class="brand-logo" style="color: white;">
+          <div class="brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
+          <div class="brand-text">Find<span style="color:#14B8A6;">Loop</span><span class="brand-sub">Owner Portal</span></div>
+        </a>
+      </div>
+
+      <div style="padding: 1rem; margin: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; font-size: 0.8rem;" id="user-info-card">
+        <p style="color: white; font-weight: 700;" id="user-name">Anshu Bala</p>
+        <p style="color: #94A3B8; font-size: 0.75rem;" id="user-email">anshubala@gehu.ac.in</p>
+      </div>
+
+      <nav style="flex: 1; padding: 0.5rem 1rem; display: flex; flex-direction: column; gap: 0.25rem;">
+        <a href="dashboard.html" class="btn btn-navy" style="justify-content: flex-start;">📊 Dashboard</a>
+        <a href="add-item.html" class="btn btn-navy" style="justify-content: flex-start;">➕ Add New Item</a>
+        <a href="notifications.html" class="btn btn-navy" style="justify-content: flex-start;">🔔 Notifications</a>
+        <a href="profile.html" class="btn btn-navy" style="justify-content: flex-start;">👤 My Profile</a>
+      </nav>
+
+      <div style="padding: 1rem; border-top: 1px solid var(--border-dark);">
+        <button id="logout-btn" class="btn btn-navy" style="width: 100%; color: #F43F5E;">Sign Out</button>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <div class="top-bar">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <a href="dashboard.html" style="font-size: 1.25rem;">←</a>
+          <div>
+            <h1 style="font-size: 1.25rem; font-weight: 800;" id="item-title">Item Profile</h1>
+            <p style="font-size: 0.75rem; color: var(--text-muted);" id="item-tag-id">FL-XXXXX</p>
+          </div>
+        </div>
+        <a href="#" id="view-qr-link" class="btn btn-navy" style="font-size: 0.8rem;">Print QR Tag</a>
+      </div>
+
+      <main class="content-body" style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Status Banner -->
+        <div id="status-banner"></div>
+
+        <div class="grid-3">
+          <!-- Item Details Card -->
+          <div class="card" style="grid-column: span 2; display: flex; flex-direction: column; gap: 1.25rem;">
+            <h3 style="font-size: 0.875rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Identity Profile</h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem;">
+              <div><span style="color: var(--text-muted); font-weight: 600;">Category:</span> <strong id="item-category">Electronics</strong></div>
+              <div><span style="color: var(--text-muted); font-weight: 600;">Color:</span> <strong id="item-color">Black</strong></div>
+              <div><span style="color: var(--text-muted); font-weight: 600;">QR Tag Status:</span> <strong id="item-qr-status" style="color: var(--accent-emerald);">Active</strong></div>
+              <div><span style="color: var(--text-muted); font-weight: 600;">Registered Date:</span> <strong id="item-date">Recent</strong></div>
+            </div>
+
+            <div style="background: var(--bg-navy-dark); color: white; padding: 1.25rem; border-radius: 16px; display: flex; flex-direction: column; gap: 0.5rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: var(--teal-light);">
+                <span>🔒 PRIVATE DISTINGUISHING DETAIL</span>
+                <span>OWNER-ONLY</span>
+              </div>
+              <p style="font-family: var(--font-mono); font-size: 0.85rem;" id="item-private-detail">Small scratch near top display corner</p>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; border-top: 1px solid var(--border-light); padding-top: 1rem;">
+              <button id="mark-lost-btn" class="btn btn-rose" style="font-size: 0.8rem;">Mark as Lost</button>
+            </div>
+          </div>
+
+          <!-- Timeline -->
+          <div class="card">
+            <h3 style="font-size: 0.875rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Status History</h3>
+            <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.8rem;" id="timeline-container">
+              <div>
+                <p style="font-weight: 800; color: var(--bg-navy-dark);">CREATED</p>
+                <p style="color: var(--text-muted);">Registered item & generated QR tag.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module">
+    import { requireAuth, logOutUser } from "../js/auth.js";
+    import { getItemByIdOrToken, updateItemStatus } from "../js/firestore.js";
+    import { getQueryParam, showToast, getStatusBadgeHTML } from "../js/utils.js";
+
+    const user = requireAuth();
+    if (document.getElementById("user-name")) document.getElementById("user-name").textContent = user.name;
+    if (document.getElementById("user-email")) document.getElementById("user-email").textContent = user.email;
+    if (document.getElementById("logout-btn")) document.getElementById("logout-btn").onclick = logOutUser;
+
+    const itemId = getQueryParam("id");
+
+    async function loadDetails() {
+      const item = await getItemByIdOrToken(itemId);
+      if (!item) {
+        alert("Item not found");
+        window.location.href = "dashboard.html";
+        return;
+      }
+
+      document.getElementById("item-title").textContent = item.itemName;
+      document.getElementById("item-tag-id").textContent = `TAG ID: ${item.itemCode}`;
+      document.getElementById("view-qr-link").href = `qr-tag.html?id=${item.itemId}`;
+      document.getElementById("item-category").textContent = item.category;
+      document.getElementById("item-color").textContent = item.color;
+      document.getElementById("item-private-detail").textContent = item.privateDetail || "No private detail recorded.";
+
+      const banner = document.getElementById("status-banner");
+      if (item.status === "SAFE") {
+        banner.innerHTML = `<div class="card" style="background: #ECFDF5; border-color: #A7F3D0; display: flex; justify-content: space-between; align-items: center;">
+          <div><h3 style="font-weight: 800; color: #065F46;">Item is currently SAFE</h3><p style="font-size: 0.8rem; color: #047857;">If misplaced on campus, click Mark as Lost to accept reports.</p></div>
+          <button id="banner-lost-btn" class="btn btn-rose">Mark as Lost</button>
+        </div>`;
+        document.getElementById("banner-lost-btn").onclick = async () => {
+          await updateItemStatus(item.itemId, "LOST");
+          showToast("Item marked as LOST!");
+          loadDetails();
+        };
+      } else if (item.status === "LOST") {
+        banner.innerHTML = `<div class="card" style="background: #FEF2F2; border-color: #FECDD3;">
+          <h3 style="font-weight: 800; color: #991B1B;">⚠️ Item marked as LOST</h3>
+          <p style="font-size: 0.8rem; color: #B91C1C;">FindLoop is actively monitoring scans for QR tag #${item.itemCode}.</p>
+        </div>`;
+      } else if (item.status === "FOUND") {
+        banner.innerHTML = `<div class="card" style="background: #FEF3C7; border-color: #FDE68A; display: flex; justify-content: space-between; align-items: center;">
+          <div><h3 style="font-weight: 800; color: #92400E;">🎉 Found Report Received!</h3><p style="font-size: 0.8rem; color: #B45309;">Your item has been reported and deposited at a campus desk.</p></div>
+          <a href="found-report.html?itemId=${item.itemId}" class="btn btn-navy">View Report & Start Handover</a>
+        </div>`;
+      } else if (item.status === "RETURNED") {
+        banner.innerHTML = `<div class="card" style="background: #CCFBF1; border-color: #99F6E4;">
+          <h3 style="font-weight: 800; color: #115E59;">✓ Item Returned Successfully</h3>
+        </div>`;
+      }
+
+      document.getElementById("mark-lost-btn").onclick = async () => {
+        await updateItemStatus(item.itemId, "LOST");
+        showToast("Item marked as LOST!");
+        loadDetails();
+      };
+    }
+
+    loadDetails();
+  </script>
+</body>
+</html>

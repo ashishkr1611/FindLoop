@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handover Verification — FindLoop</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div style="padding: 1.5rem; border-bottom: 1px solid var(--border-dark);">
+        <a href="dashboard.html" class="brand-logo" style="color: white;">
+          <div class="brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
+          <div class="brand-text">Find<span style="color:#14B8A6;">Loop</span><span class="brand-sub">Owner Portal</span></div>
+        </a>
+      </div>
+
+      <div style="padding: 1rem; margin: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; font-size: 0.8rem;" id="user-info-card">
+        <p style="color: white; font-weight: 700;" id="user-name">Anshu Bala</p>
+        <p style="color: #94A3B8; font-size: 0.75rem;" id="user-email">anshubala@gehu.ac.in</p>
+      </div>
+
+      <nav style="flex: 1; padding: 0.5rem 1rem; display: flex; flex-direction: column; gap: 0.25rem;">
+        <a href="dashboard.html" class="btn btn-navy" style="justify-content: flex-start;">📊 Dashboard</a>
+        <a href="add-item.html" class="btn btn-navy" style="justify-content: flex-start;">➕ Add New Item</a>
+        <a href="notifications.html" class="btn btn-navy" style="justify-content: flex-start;">🔔 Notifications</a>
+        <a href="profile.html" class="btn btn-navy" style="justify-content: flex-start;">👤 My Profile</a>
+      </nav>
+
+      <div style="padding: 1rem; border-top: 1px solid var(--border-dark);">
+        <button id="logout-btn" class="btn btn-navy" style="width: 100%; color: #F43F5E;">Sign Out</button>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <div class="top-bar">
+        <h1 style="font-size: 1.25rem; font-weight: 800;">Handover Verification</h1>
+      </div>
+
+      <main class="content-body" style="max-width: 520px; display: flex; flex-direction: column; justify-content: center; min-height: 70vh;">
+        <div class="card" style="display: flex; flex-direction: column; gap: 1.5rem; text-align: center;" id="handover-card">
+          <div style="font-size: 2.5rem;">🔑</div>
+          <div>
+            <h2 style="font-size: 1.35rem; font-weight: 900;">Safe Handover Verification</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Enter the 6-digit collection code provided in your report details.</p>
+          </div>
+
+          <form id="handover-form" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="form-group">
+              <input type="text" id="vcode" required maxlength="6" value="482910" placeholder="482910" class="form-input" style="text-align: center; font-size: 1.75rem; font-family: var(--font-mono); font-weight: 900; letter-spacing: 6px; padding: 0.875rem;">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="padding: 1rem; font-weight: 800; font-size: 0.95rem;">
+              Verify Collection & Complete Return →
+            </button>
+          </form>
+
+          <div style="background: #F8FAFC; padding: 0.75rem; border-radius: 12px; font-size: 0.75rem; color: var(--text-muted);">
+            🛡️ One-time verification ensures confirmed physical recovery at the handover desk.
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module">
+    import { requireAuth, logOutUser } from "../js/auth.js";
+    import { verifyHandoverCodeInFirestore } from "../js/firestore.js";
+    import { getQueryParam, showToast } from "../js/utils.js";
+
+    const user = requireAuth();
+    if (document.getElementById("user-name")) document.getElementById("user-name").textContent = user.name;
+    if (document.getElementById("user-email")) document.getElementById("user-email").textContent = user.email;
+    if (document.getElementById("logout-btn")) document.getElementById("logout-btn").onclick = logOutUser;
+
+    const reportId = getQueryParam("reportId") || "rep_calc_101";
+
+    document.getElementById("handover-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const code = document.getElementById("vcode").value;
+
+      const result = await verifyHandoverCodeInFirestore(reportId, code);
+
+      if (result.success) {
+        document.getElementById("handover-card").innerHTML = `
+          <div style="font-size: 3rem; color: var(--primary-teal);">✓</div>
+          <h2 style="font-size: 1.5rem; font-weight: 900; color: var(--bg-navy-dark);">Item Returned Successfully!</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Your belonging has been verified at the handover desk and returned to you.</p>
+          <a href="dashboard.html" class="btn btn-navy" style="padding: 0.875rem; font-weight: 800; margin-top: 1rem;">Back to My Items →</a>
+        `;
+      } else {
+        alert(result.message);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User Profile Rules
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Items Rules
+    match /items/{itemId} {
+      allow create, update, delete: if request.auth != null && request.auth.uid == resource.data.ownerId;
+      allow read: if resource.data.qrActive == true; // Public finder lookup
+      allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Found Reports Rules
+    match /foundReports/{reportId} {
+      allow create: if true; // Public finders can submit reports without account
+      allow read, update: if request.auth != null;
+      allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Notifications Rules
+    match /notifications/{notificationId} {
+      allow read, update: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+
+    // Handover Verifications Rules
+    match /handoverVerifications/{verificationId} {
+      allow read, update: if request.auth != null;
+    }
+
+    // Item History Audit Rules
+    match /itemHistory/{historyId} {
+      allow read: if request.auth != null;
+      allow create: if true;
+    }
+  }
+}

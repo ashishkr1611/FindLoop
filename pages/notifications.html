@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications — FindLoop</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div style="padding: 1.5rem; border-bottom: 1px solid var(--border-dark);">
+        <a href="dashboard.html" class="brand-logo" style="color: white;">
+          <div class="brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
+          <div class="brand-text">Find<span style="color:#14B8A6;">Loop</span><span class="brand-sub">Owner Portal</span></div>
+        </a>
+      </div>
+
+      <div style="padding: 1rem; margin: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; font-size: 0.8rem;" id="user-info-card">
+        <p style="color: white; font-weight: 700;" id="user-name">Anshu Bala</p>
+        <p style="color: #94A3B8; font-size: 0.75rem;" id="user-email">anshubala@gehu.ac.in</p>
+      </div>
+
+      <nav style="flex: 1; padding: 0.5rem 1rem; display: flex; flex-direction: column; gap: 0.25rem;">
+        <a href="dashboard.html" class="btn btn-navy" style="justify-content: flex-start;">📊 Dashboard</a>
+        <a href="add-item.html" class="btn btn-navy" style="justify-content: flex-start;">➕ Add New Item</a>
+        <a href="notifications.html" class="btn btn-navy" style="justify-content: flex-start; background-color: var(--primary-teal); color: #0F172A;">🔔 Notifications</a>
+        <a href="profile.html" class="btn btn-navy" style="justify-content: flex-start;">👤 My Profile</a>
+      </nav>
+
+      <div style="padding: 1rem; border-top: 1px solid var(--border-dark);">
+        <button id="logout-btn" class="btn btn-navy" style="width: 100%; color: #F43F5E;">Sign Out</button>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <div class="top-bar">
+        <h1 style="font-size: 1.25rem; font-weight: 800;">Notifications Center</h1>
+      </div>
+
+      <main class="content-body" style="max-width: 720px;">
+        <div style="display: flex; flex-direction: column; gap: 1rem;" id="notifications-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module">
+    import { requireAuth, logOutUser } from "../js/auth.js";
+    import { getNotificationsForUser, markNotificationRead } from "../js/firestore.js";
+    import { formatDate } from "../js/utils.js";
+
+    const user = requireAuth();
+    if (document.getElementById("user-name")) document.getElementById("user-name").textContent = user.name;
+    if (document.getElementById("user-email")) document.getElementById("user-email").textContent = user.email;
+    if (document.getElementById("logout-btn")) document.getElementById("logout-btn").onclick = logOutUser;
+
+    async function loadNotifications() {
+      const list = await getNotificationsForUser(user.uid);
+      const container = document.getElementById("notifications-list");
+      container.innerHTML = "";
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="card" style="text-align: center; padding: 3rem;">
+          <p>No notifications yet. You will be alerted when someone scans your item tag.</p>
+        </div>`;
+        return;
+      }
+
+      list.forEach((n) => {
+        const notifCard = document.createElement("div");
+        notifCard.className = "card";
+        notifCard.style.display = "flex";
+        notifCard.style.justifyContent = "space-between";
+        notifCard.style.alignItems = "center";
+        notifCard.style.gap = "1rem";
+        if (!n.read) {
+          notifCard.style.borderColor = "var(--accent-gold)";
+          notifCard.style.backgroundColor = "#FEF3C7";
+        }
+
+        notifCard.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <h4 style="font-size: 0.95rem; font-weight: 800;">${n.title}</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">${n.message}</p>
+            <span style="font-size: 0.7rem; color: var(--text-light); font-family: var(--font-mono);">${formatDate(n.createdAt)}</span>
+          </div>
+
+          ${n.reportId ? `<a href="found-report.html?reportId=${n.reportId}" class="btn btn-navy" style="padding: 0.5rem 1rem; font-size: 0.75rem;">View Report →</a>` : ''}
+        `;
+
+        notifCard.onclick = async () => {
+          await markNotificationRead(n.notificationId);
+        };
+
+        container.appendChild(notifCard);
+      });
+    }
+
+    loadNotifications();
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Exclude admin directory as per user request (admin has a separate repository)
+admin/
+
+# Dependencies & temporary files
+node_modules/
+.DS_Store
+*.log

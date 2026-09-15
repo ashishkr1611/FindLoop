@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Found Item — FindLoop</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body style="background-color: var(--bg-navy-dark); color: white; min-height: 100vh; display: flex; flex-direction: column;">
+  
+  <!-- STICKY 3-STEP PROGRESS BAR -->
+  <div style="position: sticky; top: 0; z-index: 50; background: rgba(11, 17, 32, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-dark); padding: 0.75rem 1rem;">
+    <div style="max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: 700;">
+      <div style="color: var(--teal-light); display: flex; align-items: center; gap: 6px;">
+        <span style="background: rgba(20, 184, 166, 0.2); color: var(--teal-light); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; border: 1px solid var(--teal-light);">✓</span>
+        <span>1. Scan Token</span>
+      </div>
+      <span style="color: #475569;">→</span>
+      <div style="color: #FFFFFF; display: flex; align-items: center; gap: 6px;">
+        <span style="background: var(--primary-teal); color: #0F172A; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900;">2</span>
+        <span>2. Location</span>
+      </div>
+      <span style="color: #475569;">→</span>
+      <div style="color: #64748B; display: flex; align-items: center; gap: 6px;">
+        <span style="background: #1E293B; color: #94A3B8; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;">3</span>
+        <span>3. Handover</span>
+      </div>
+    </div>
+  </div>
+
+  <header style="padding: 1rem; border-bottom: 1px solid var(--border-dark); background: rgba(11, 17, 32, 0.8);">
+    <div style="max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+      <a href="../index.html" class="brand-logo" style="color: white; font-size: 1.125rem;">
+        <div class="brand-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
+        Find<span style="color:#14B8A6;">Loop</span>
+      </a>
+      <span class="badge badge-safe">Private Mode</span>
+    </div>
+  </header>
+
+  <main style="flex: 1; max-width: 480px; width: 100%; margin: 0 auto; padding: 1.75rem 1rem 3rem; display: flex; flex-direction: column; gap: 1.5rem;">
+    <div>
+      <span class="badge" style="background: #334155; color: white; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; margin-bottom: 0.5rem;" id="item-tag-badge">
+        ITEM TAG
+      </span>
+      <h1 style="font-size: 1.5rem; font-weight: 900; color: white;">Report Found Item</h1>
+      <p style="font-size: 0.8rem; color: #94A3B8;">Provide details below. The owner will receive an immediate notification.</p>
+    </div>
+
+    <form id="finder-report-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+      <div class="form-group">
+        <label class="form-label form-label-dark">1. Where did you find it? *</label>
+        <select id="location" class="form-select form-select-dark">
+          <option value="Library">Library</option>
+          <option value="Canteen">Canteen / Food Court</option>
+          <option value="Classroom">Classroom / Lecture Hall</option>
+          <option value="Laboratory">Laboratory</option>
+          <option value="Auditorium">Auditorium</option>
+          <option value="Sports Area">Sports Area / Gym</option>
+          <option value="Hostel">Hostel Block</option>
+          <option value="Security Desk">Security Desk</option>
+          <option value="Other">Other Campus Area</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label form-label-dark">2. Specific spot or bench details *</label>
+        <input type="text" id="specificLocation" required placeholder="e.g. 2nd Floor study tables near window" class="form-input form-input-dark">
+        
+        <!-- PRESET CAMPUS LOCATION CHIPS -->
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.6rem;" id="preset-location-chips">
+          <button type="button" class="loc-chip btn btn-navy" data-loc="Library" data-spot="Central Library 2nd Floor Study Desk" style="padding: 4px 10px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: #0B1120;">📍 Central Library</button>
+          <button type="button" class="loc-chip btn btn-navy" data-loc="Canteen" data-spot="Main Canteen Table near Counter 3" style="padding: 4px 10px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: #0B1120;">📍 Main Canteen</button>
+          <button type="button" class="loc-chip btn btn-navy" data-loc="Laboratory" data-spot="Block B Computer Lab Desk 12" style="padding: 4px 10px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: #0B1120;">📍 Block B Lab</button>
+          <button type="button" class="loc-chip btn btn-navy" data-loc="Security Desk" data-spot="Main Gate Security Entrance Counter" style="padding: 4px 10px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: #0B1120;">📍 Security Gate</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label form-label-dark" style="display: flex; justify-content: space-between;">
+          <span>3. Anonymous Message (Optional)</span>
+          <span style="font-family: var(--font-mono); color: #64748B;">Max 500 chars</span>
+        </label>
+        <textarea id="message" rows="3" maxlength="500" placeholder="e.g. I found this item lying on table 4 and gave it to the desk guard." class="form-textarea form-textarea-dark"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label form-label-dark">4. Safe Campus Handover Desk *</label>
+        <select id="handoverLocation" class="form-select form-select-dark">
+          <option value="Security Desk (Main Gate)">Security Desk (Main Gate)</option>
+          <option value="Library Information Desk">Library Information Desk</option>
+          <option value="Student Union Reception">Student Union Reception</option>
+          <option value="Hostel Warden Office">Hostel Warden Office</option>
+        </select>
+      </div>
+
+      <div style="background: #0B1120; border: 1px solid #334155; padding: 0.875rem; border-radius: 12px; font-size: 0.75rem; color: #CBD5E1; line-height: 1.5;">
+        <strong style="color: #14B8A6;">Privacy Guarantee:</strong> Your message is sent through FindLoop dispatch. The owner's personal phone number and email are not shown.
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="padding: 1rem; border-radius: 16px; font-weight: 900; font-size: 1rem;">
+        Submit Found Report →
+      </button>
+    </form>
+  </main>
+
+  <script type="module">
+    import { getItemByIdOrToken, submitFoundReportInFirestore } from "../js/firestore.js";
+    import { getQueryParam } from "../js/utils.js";
+
+    const token = getQueryParam("token") || "FL-8X92K";
+    let targetItem = null;
+
+    async function initReportForm() {
+      targetItem = await getItemByIdOrToken(token);
+      if (targetItem) {
+        document.getElementById("item-tag-badge").textContent = `TAG ID: ${targetItem.itemCode} • ${targetItem.category.toUpperCase()}`;
+      }
+    }
+
+    // Preset Location Chip 1-Tap Handlers
+    const chips = document.querySelectorAll(".loc-chip");
+    const locSelect = document.getElementById("location");
+    const specInput = document.getElementById("specificLocation");
+
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chips.forEach(c => {
+          c.style.borderColor = "rgba(255, 255, 255, 0.15)";
+          c.style.color = "#CBD5E1";
+          c.style.background = "#0B1120";
+        });
+        chip.style.borderColor = "#14B8A6";
+        chip.style.color = "#14B8A6";
+        chip.style.background = "rgba(20, 184, 166, 0.25)";
+
+        const targetCategory = chip.getAttribute("data-loc");
+        const targetSpot = chip.getAttribute("data-spot");
+
+        if (locSelect) locSelect.value = targetCategory;
+        if (specInput) specInput.value = targetSpot;
+      });
+    });
+
+    document.getElementById("finder-report-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const location = document.getElementById("location").value;
+      const specificLocation = document.getElementById("specificLocation").value;
+      const message = document.getElementById("message").value;
+      const handoverLocation = document.getElementById("handoverLocation").value;
+
+      const itemId = targetItem ? targetItem.itemId : token;
+
+      const newReport = await submitFoundReportInFirestore({
+        itemId,
+        location,
+        specificLocation,
+        message,
+        handoverLocation
+      });
+
+      const verificationCode = newReport?.verificationCode || Math.floor(100000 + Math.random() * 900000).toString();
+
+      window.location.href = `success.html?token=${token}&handover=${encodeURIComponent(handoverLocation)}&code=${verificationCode}`;
+    });
+
+    initReportForm();
+  </script>
+</body>
+</html>

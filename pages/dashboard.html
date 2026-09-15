@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Dashboard — FindLoop</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div style="padding: 1.5rem; border-bottom: 1px solid var(--border-dark);">
+        <a href="dashboard.html" class="brand-logo" style="color: white;">
+          <div class="brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
+          <div class="brand-text">Find<span style="color:#14B8A6;">Loop</span><span class="brand-sub">Owner Portal</span></div>
+        </a>
+      </div>
+
+      <div style="padding: 1rem; margin: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; font-size: 0.8rem;" id="user-info-card">
+        <p style="color: white; font-weight: 700;" id="user-name">Anshu Bala</p>
+        <p style="color: #94A3B8; font-size: 0.75rem;" id="user-email">anshubala@gehu.ac.in</p>
+      </div>
+
+      <nav style="flex: 1; padding: 0.5rem 1rem; display: flex; flex-direction: column; gap: 0.25rem;">
+        <a href="dashboard.html" class="btn btn-navy" style="justify-content: flex-start; background-color: var(--primary-teal); color: #0F172A;">📊 Dashboard</a>
+        <a href="add-item.html" class="btn btn-navy" style="justify-content: flex-start;">➕ Add New Item</a>
+        <a href="notifications.html" class="btn btn-navy" style="justify-content: flex-start;">🔔 Notifications</a>
+        <a href="profile.html" class="btn btn-navy" style="justify-content: flex-start;">👤 My Profile</a>
+      </nav>
+
+      <div style="padding: 1rem; border-top: 1px solid var(--border-dark);">
+        <button id="logout-btn" class="btn btn-navy" style="width: 100%; color: #F43F5E;">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <div class="top-bar">
+        <div>
+          <h1 style="font-size: 1.25rem; font-weight: 800;" id="welcome-heading">Welcome back</h1>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Manage your tagged belongings and monitor lost-and-found status.</p>
+        </div>
+        <a href="notifications.html" class="btn btn-outline" style="padding: 0.5rem 0.75rem; position: relative;">
+          🔔
+        </a>
+      </div>
+
+      <main class="content-body" style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Welcome CTA Banner -->
+        <div class="card-dark" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); border: 1px solid rgba(20, 184, 166, 0.25); border-radius: 20px; padding: 1.75rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);">
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; max-width: 650px;">
+            <span class="badge badge-safe" style="width: fit-content;">🛡️ Privacy Shield Active</span>
+            <h2 style="font-size: 1.5rem; font-weight: 900; color: #FFFFFF;">Keep your campus belongings connected.</h2>
+            <p style="font-size: 0.875rem; color: #CBD5E1; line-height: 1.5;">Register a new item, generate a printable QR tag, and protect it without exposing personal details.</p>
+          </div>
+          <a href="add-item.html" class="btn btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 800; font-size: 0.95rem; white-space: nowrap;">+ Add Item</a>
+        </div>
+
+        <!-- Statistics Grid -->
+        <div class="grid-4">
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Total Items</p>
+              <p style="font-size: 1.75rem; font-weight: 900;" id="stat-total">-</p>
+            </div>
+            <div style="font-size: 1.75rem;">📦</div>
+          </div>
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Currently Lost</p>
+              <p style="font-size: 1.75rem; font-weight: 900; color: var(--accent-rose);" id="stat-lost">-</p>
+            </div>
+            <div style="font-size: 1.75rem;">⚠️</div>
+          </div>
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Found Reports</p>
+              <p style="font-size: 1.75rem; font-weight: 900; color: var(--accent-gold);" id="stat-found">-</p>
+            </div>
+            <div style="font-size: 1.75rem;">📩</div>
+          </div>
+          <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Returned</p>
+              <p style="font-size: 1.75rem; font-weight: 900; color: var(--primary-teal);" id="stat-returned">-</p>
+            </div>
+            <div style="font-size: 1.75rem;">✓</div>
+          </div>
+        </div>
+
+        <!-- MY ITEMS SECTION -->
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="font-size: 1.25rem; font-weight: 800;">My Registered Items</h3>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">Click any item to view QR tag, manage status, or complete handover.</p>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+              <button id="print-sheet-btn" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem 0.85rem; border-color: var(--primary-teal); color: var(--primary-teal); font-weight: 800;">
+                🖨️ Printable Tag Sheet
+              </button>
+              <input type="text" id="search-input" placeholder="Search items..." class="form-input" style="max-width: 200px; padding: 0.5rem 0.75rem; font-size: 0.8rem;">
+            </div>
+          </div>
+
+          <div class="grid-3" id="items-grid">
+            <div class="card" style="grid-column: 1/-1; text-align: center; padding: 2.5rem; color: #94A3B8;">
+              <p style="font-weight: 600;">🔄 Loading registered items...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <div class="mobile-bottom-nav">
+    <a href="dashboard.html" class="mobile-nav-item active">📊 <span>Home</span></a>
+    <a href="add-item.html" class="mobile-nav-item">➕ <span>Add Tag</span></a>
+    <a href="notifications.html" class="mobile-nav-item">🔔 <span>Alerts</span></a>
+    <a href="profile.html" class="mobile-nav-item">👤 <span>Profile</span></a>
+  </div>
+
+  <script type="module">
+    import { requireAuth, logOutUser } from "../js/auth.js";
+    import { getUserItems } from "../js/firestore.js";
+    import { getStatusBadgeHTML, getGreeting, showToast } from "../js/utils.js";
+
+    const user = requireAuth();
+    document.getElementById("user-name").textContent = user.name;
+    document.getElementById("user-email").textContent = user.email;
+    document.getElementById("welcome-heading").textContent = `${getGreeting()}, ${user.name}`;
+
+    document.getElementById("logout-btn").addEventListener("click", logOutUser);
+
+    document.getElementById("print-sheet-btn").addEventListener("click", () => {
+      showToast("Opening printable sticker sheet format...");
+      window.print();
+    });
+
+    async function loadDashboard() {
+      const items = await getUserItems(user.uid);
+
+      // Stats
+      document.getElementById("stat-total").textContent = items.length;
+      document.getElementById("stat-lost").textContent = items.filter(i => i.status === "LOST").length;
+      document.getElementById("stat-found").textContent = items.filter(i => i.status === "FOUND").length;
+      document.getElementById("stat-returned").textContent = items.filter(i => i.status === "RETURNED").length;
+
+      const grid = document.getElementById("items-grid");
+      grid.innerHTML = "";
+
+      if (items.length === 0) {
+        grid.innerHTML = `
+          <div class="card" style="grid-column: 1/-1; text-align: center; padding: 3.5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); border: 2px dashed #CBD5E1; border-radius: 20px;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(20, 184, 166, 0.1); border: 2px solid rgba(20, 184, 166, 0.3); display: flex; align-items: center; justify-content: center; font-size: 2.25rem;">
+              🏷️
+            </div>
+            <div style="max-width: 440px;">
+              <h4 style="font-size: 1.25rem; font-weight: 800; color: var(--bg-navy-dark); margin-bottom: 0.35rem;">No Belongings Tagged Yet</h4>
+              <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5;">Protect your calculator, water bottle, backpack, or keys in under 30 seconds with a privacy-first FindLoop QR tag.</p>
+            </div>
+            <a href="add-item.html" class="btn btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 900; font-size: 0.95rem; box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25);">
+              + Register My First Item in 30s →
+            </a>
+          </div>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const itemCard = document.createElement("div");
+        itemCard.className = "card";
+        itemCard.style.display = "flex";
+        itemCard.style.flexDirection = "column";
+        itemCard.style.justifyContent = "space-between";
+        itemCard.style.gap = "1rem";
+
+        itemCard.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+              ${getStatusBadgeHTML(item.status)}
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-muted); background: #F1F5F9; padding: 2px 8px; border-radius: 6px;">${item.itemCode}</span>
+            </div>
+            <h4 style="font-size: 1.125rem; font-weight: 800; color: var(--bg-navy-dark); margin-top: 0.25rem;">${item.itemName}</h4>
+            <p style="font-size: 0.75rem; color: var(--text-muted);">Category: <strong>${item.category}</strong> • Color: <strong>${item.color || 'Default'}</strong></p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 0.75rem; font-size: 0.75rem; font-weight: 700;">
+            <a href="item-details.html?id=${item.itemId}" style="color: var(--primary-teal); font-weight: 800;">View Details →</a>
+            <a href="qr-tag.html?id=${item.itemId}" class="btn btn-navy" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">🖨️ QR Tag</a>
+          </div>
+        `;
+
+        grid.appendChild(itemCard);
+      });
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>

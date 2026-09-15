@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Found Item Report — FindLoop</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div style="padding: 1.5rem; border-bottom: 1px solid var(--border-dark);">
+        <a href="dashboard.html" class="brand-logo" style="color: white;">
+          <div class="brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
+          <div class="brand-text">Find<span style="color:#14B8A6;">Loop</span><span class="brand-sub">Owner Portal</span></div>
+        </a>
+      </div>
+
+      <div style="padding: 1rem; margin: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; font-size: 0.8rem;" id="user-info-card">
+        <p style="color: white; font-weight: 700;" id="user-name">Anshu Bala</p>
+        <p style="color: #94A3B8; font-size: 0.75rem;" id="user-email">anshubala@gehu.ac.in</p>
+      </div>
+
+      <nav style="flex: 1; padding: 0.5rem 1rem; display: flex; flex-direction: column; gap: 0.25rem;">
+        <a href="dashboard.html" class="btn btn-navy" style="justify-content: flex-start;">📊 Dashboard</a>
+        <a href="add-item.html" class="btn btn-navy" style="justify-content: flex-start;">➕ Add New Item</a>
+        <a href="notifications.html" class="btn btn-navy" style="justify-content: flex-start;">🔔 Notifications</a>
+        <a href="profile.html" class="btn btn-navy" style="justify-content: flex-start;">👤 My Profile</a>
+      </nav>
+
+      <div style="padding: 1rem; border-top: 1px solid var(--border-dark);">
+        <button id="logout-btn" class="btn btn-navy" style="width: 100%; color: #F43F5E;">Sign Out</button>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <div class="top-bar">
+        <h1 style="font-size: 1.25rem; font-weight: 800;">Found Item Report Details</h1>
+      </div>
+
+      <main class="content-body" style="max-width: 680px; display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="card-dark" style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <span class="badge badge-found" style="width: fit-content;">FOUND REPORT RECEIVED</span>
+          <h2 style="font-size: 1.5rem; font-weight: 900;" id="report-item-name">My Black Calculator</h2>
+          <p style="font-size: 0.8rem; color: #94A3B8;">A scanner reported finding this item and deposited it at a safe campus location.</p>
+        </div>
+
+        <div class="card" style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem;">
+            <div style="background: #F8FAFC; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-light);">
+              <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: block;">Found Location</span>
+              <strong id="report-location" style="font-size: 1rem; color: var(--bg-navy-dark);">Library</strong>
+              <p style="font-size: 0.75rem; color: var(--text-muted);" id="report-specific">2nd Floor near study tables</p>
+            </div>
+
+            <div style="background: #FEF3C7; padding: 1rem; border-radius: 12px; border: 1px solid #FDE68A;">
+              <span style="color: #B45309; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: block;">Handover Desk</span>
+              <strong id="report-handover" style="font-size: 1rem; color: #78350F;">Security Desk</strong>
+              <p style="font-size: 0.75rem; color: #92400E;">Go to this desk to claim item</p>
+            </div>
+          </div>
+
+          <div style="background: #F8FAFC; padding: 1rem; border-radius: 12px; border: 1px solid var(--border-light); font-size: 0.85rem;">
+            <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 4px;">Anonymous Finder Message</span>
+            <p style="font-style: italic; color: var(--text-main);" id="report-message">"I found this near the study tables and gave it to the desk guard."</p>
+          </div>
+
+          <div style="background: var(--teal-subtle); border: 1px solid #99F6E4; padding: 1.25rem; border-radius: 16px; text-align: center; display: flex; flex-direction: column; gap: 0.5rem;">
+            <span style="font-size: 0.75rem; font-weight: 700; color: #0F766E; text-transform: uppercase;">Your Collection Verification Code</span>
+            <p style="font-family: var(--font-mono); font-size: 2.25rem; font-weight: 900; color: var(--primary-teal); letter-spacing: 4px;" id="report-code">482910</p>
+            <p style="font-size: 0.75rem; color: #0F766E;">Provide this 6-digit code at the desk during handover verification to complete recovery.</p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 1rem;">
+            <a href="dashboard.html" class="btn btn-outline">Back to Dashboard</a>
+            <a href="#" id="start-handover-link" class="btn btn-primary" style="padding: 0.75rem 1.5rem;">Start Handover Verification →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module">
+    import { requireAuth, logOutUser } from "../js/auth.js";
+    import { getAllReportsAdmin, getFoundReportById, getItemByIdOrToken } from "../js/firestore.js";
+    import { getQueryParam, formatDate } from "../js/utils.js";
+
+    const user = requireAuth();
+    if (document.getElementById("user-name")) document.getElementById("user-name").textContent = user.name;
+    if (document.getElementById("user-email")) document.getElementById("user-email").textContent = user.email;
+    if (document.getElementById("logout-btn")) document.getElementById("logout-btn").onclick = logOutUser;
+    const reportId = getQueryParam("reportId") || "rep_calc_101";
+
+    async function loadReport() {
+      const reports = await getAllReportsAdmin();
+      const report = reports.find(r => r.reportId === reportId) || reports[0];
+      const item = await getItemByIdOrToken(report.itemId);
+
+      if (item) {
+        document.getElementById("report-item-name").textContent = item.itemName;
+      }
+      document.getElementById("report-location").textContent = report.location;
+      document.getElementById("report-specific").textContent = report.specificLocation;
+      document.getElementById("report-handover").textContent = report.handoverLocation;
+      document.getElementById("report-message").textContent = `"${report.message || 'No additional message provided.'}"`;
+      document.getElementById("report-code").textContent = report.verificationCode;
+      document.getElementById("start-handover-link").href = `handover.html?reportId=${report.reportId}`;
+    }
+
+    loadReport();
+  </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Sent — FindLoop</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    @keyframes checkmark-pop {
+      0% { transform: scale(0.3); opacity: 0; }
+      70% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes ring-glow {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+      70% { box-shadow: 0 0 0 16px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    .animated-success-badge {
+      animation: checkmark-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, ring-glow 2s infinite 0.6s;
+    }
+  </style>
+</head>
+<body style="background-color: var(--bg-navy-dark); color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem 1rem;">
+  <div class="card-dark" style="max-width: 440px; width: 100%; text-align: center; padding: 2.25rem 1.75rem; border-radius: 28px; display: flex; flex-direction: column; gap: 1.25rem; border: 1px solid #334155; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+    
+    <!-- Celebratory Animated Badge -->
+    <div class="animated-success-badge" style="width: 80px; height: 80px; border-radius: 50%; background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald); border: 2.5px solid var(--accent-emerald); display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+
+    <div>
+      <span class="badge badge-safe" style="font-size: 0.75rem; margin-bottom: 0.35rem;">🎉 Report Dispatched</span>
+      <h1 style="font-size: 1.5rem; font-weight: 900; color: white;">Thank you for helping!</h1>
+      <p style="font-size: 0.825rem; color: #94A3B8; margin-top: 0.25rem; line-height: 1.5;">
+        Your report has been securely dispatched to the item owner without exposing personal details.
+      </p>
+    </div>
+
+    <!-- HIGH-CONTRAST DIGITAL TICKET CARD -->
+    <div style="background: #0F172A; border: 2px dashed #14B8A6; padding: 1.25rem; border-radius: 18px; text-align: center; display: flex; flex-direction: column; gap: 0.6rem; position: relative;">
+      <span style="font-size: 0.7rem; font-weight: 800; color: var(--teal-light); text-transform: uppercase; letter-spacing: 0.5px;">🔑 6-Digit Handover Code</span>
+      <div style="font-family: var(--font-mono); font-size: 2.25rem; font-weight: 900; color: #FFFFFF; letter-spacing: 4px;" id="code-display">491823</div>
+      
+      <button type="button" id="copy-code-btn" class="btn btn-navy" style="padding: 0.4rem 0.75rem; font-size: 0.75rem; background: #1E293B; border: 1px solid #334155; color: #CBD5E1; margin: 0 auto; width: fit-content;">
+        📋 Copy Handover Code
+      </button>
+
+      <p style="font-size: 0.725rem; color: #94A3B8; margin: 0; line-height: 1.4;">Give this code to the campus handover desk guard when dropping off the item.</p>
+    </div>
+
+    <!-- Handover Desk Details -->
+    <div style="background: #0B1120; border: 1px solid #334155; padding: 1rem; border-radius: 16px; text-align: left; display: flex; flex-direction: column; gap: 0.25rem;">
+      <span style="font-size: 0.7rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase;">📍 Recommended Handover Desk</span>
+      <strong style="font-size: 1.1rem; color: white;" id="handover-name">Security Desk (Main Gate)</strong>
+      <p style="font-size: 0.75rem; color: #CBD5E1; line-height: 1.5; margin: 0;">The owner will verify this 6-digit code at the desk to claim their item.</p>
+    </div>
+
+    <a href="../index.html" class="btn btn-primary" style="padding: 0.875rem; border-radius: 14px; font-weight: 900; font-size: 0.95rem;">
+      Done & Return Home →
+    </a>
+  </div>
+
+  <script type="module">
+    import { getQueryParam, showToast } from "../js/utils.js";
+    import { getAllReportsAdmin } from "../js/firestore.js";
+    
+    const handover = getQueryParam("handover");
+    if (handover) {
+      document.getElementById("handover-name").textContent = decodeURIComponent(handover);
+    }
+
+    async function initSuccessView() {
+      let code = getQueryParam("code");
+      if (!code) {
+        try {
+          const reports = await getAllReportsAdmin();
+          if (reports && reports.length > 0) {
+            code = reports[0].verificationCode;
+          }
+        } catch (e) {
+          console.warn("Could not fetch latest report code:", e);
+        }
+      }
+
+      const finalCode = code || "482910";
+      document.getElementById("code-display").textContent = finalCode;
+
+      document.getElementById("copy-code-btn").addEventListener("click", () => {
+        navigator.clipboard.writeText(finalCode).then(() => {
+          showToast("Handover code copied!");
+        }).catch(() => {
+          showToast(`Handover Code: ${finalCode}`);
+        });
+      });
+    }
+
+    initSuccessView();
+  </script>
+</body>
+</html>

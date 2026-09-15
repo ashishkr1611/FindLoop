@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FindLoop — Scan it. Report it. Return it.</title>
+  <meta name="description" content="A privacy-safe QR-based lost-and-found system designed specifically for college campuses.">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- HEADER NAVBAR -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </div>
+        <div class="brand-text">
+          Find<span>Loop</span>
+          <span class="brand-sub">"Scan it. Report it. Return it."</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="how-it-works.html">How It Works</a>
+        <a href="#privacy">Privacy Shield</a>
+        <a href="#safety">Campus Handover</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Log In</a>
+        <a href="signup.html" class="btn btn-primary">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section style="background: linear-gradient(180deg, #0F172A 0%, #0B1120 100%); color: white; padding: 4.5rem 0 5.5rem; position: relative;">
+    <div class="container">
+      <div class="grid-2" style="align-items: center; gap: 3rem;">
+        
+        <!-- LEFT COLUMN: COPY & CTA -->
+        <div style="display: flex; flex-direction: column; gap: 1.5rem; text-align: left;">
+          
+          <div style="background: rgba(20, 184, 166, 0.15); border: 1px solid rgba(20, 184, 166, 0.35); padding: 8px 18px; border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 700; color: var(--teal-light); display: inline-flex; align-items: center; gap: 10px; width: fit-content;">
+            <span class="pulse-dot"></span>
+            <span>🛡️ Privacy-First</span> • <span>No GPS Tracking</span> • <span>Zero Public Contacts</span>
+          </div>
+
+          <h1 style="font-size: 3.25rem; font-weight: 900; line-height: 1.12;">
+            Lost something on campus? <br>
+            <span style="color: #14B8A6;">Find it without losing your privacy.</span>
+          </h1>
+
+          <p style="font-size: 1.125rem; color: #94A3B8; font-weight: 400; line-height: 1.6; max-width: 580px;">
+            FindLoop connects lost belongings with their owners using simple QR tags — without publicly revealing personal contact details.
+          </p>
+
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
+            <a href="signup.html" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1rem; border-radius: var(--radius-md);">
+              Get Started Free →
+            </a>
+            <a href="public/scan.html?token=FL-8X92K" class="btn btn-ghost-dark" style="padding: 1rem 2rem; font-size: 1rem; border-radius: var(--radius-md);">
+              🔍 Found Something? Test Scan
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: LIVE TAG SIMULATOR / INTERACTIVE MOCKUP -->
+        <div class="glass-card" style="border-radius: var(--radius-xl); padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.12); padding-bottom: 1rem; margin-bottom: 0.25rem;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.25rem;">⚡</span>
+              <h2 style="font-size: 1.25rem; font-weight: 800; color: white; margin: 0;">Interactive Tag Sandbox</h2>
+            </div>
+            <span class="badge badge-safe" style="font-size: 0.75rem; padding: 4px 12px; margin-left: 0.5rem;">Try Live Demo</span>
+          </div>
+
+          <!-- Preset Item Chips -->
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="sim-chips-container">
+            <button class="sim-chip btn btn-navy" data-name="Scientific Calculator" data-icon="🔢" style="padding: 5px 12px; font-size: 0.75rem; border: 1px solid #14B8A6; color: #14B8A6; background: rgba(20, 184, 166, 0.25);">🔢 Calculator</button>
+            <button class="sim-chip btn btn-navy" data-name="AirPods Pro Case" data-icon="🎧" style="padding: 5px 12px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: rgba(15, 23, 42, 0.8);">🎧 AirPods</button>
+            <button class="sim-chip btn btn-navy" data-name="Hydro Flask Bottle" data-icon="🍾" style="padding: 5px 12px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: rgba(15, 23, 42, 0.8);">🍾 Bottle</button>
+            <button class="sim-chip btn btn-navy" data-name="MacBook Pro 14" data-icon="💻" style="padding: 5px 12px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: rgba(15, 23, 42, 0.8);">💻 Laptop</button>
+          </div>
+
+          <div class="form-group" style="text-align: left; margin-top: 0.85rem; margin-bottom: 0.25rem;">
+            <label style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; display: block; margin-bottom: 0.35rem;">Or type custom item name:</label>
+            <input type="text" id="sim-item-input" value="Scientific Calculator" placeholder="e.g. Water Bottle, Backpack..." class="form-input form-input-dark" style="background: #0B1120; border-color: rgba(20, 184, 166, 0.4); font-size: 0.875rem; padding: 0.6rem 1rem;">
+          </div>
+
+          <!-- Live Generated Tag Card -->
+          <div style="background: #0F172A; border: 1.5px solid rgba(20, 184, 166, 0.4); border-radius: var(--radius-lg); padding: 1.25rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
+            <div style="background: white; padding: 0.5rem; border-radius: var(--radius-sm); width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+              <svg width="85" height="85" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" fill="white"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10 10H40V40H10V10ZM20 20V30H30V20H20ZM60 10H90V40H60V10ZM70 20V30H80V20H70ZM10 60H40V90H10V60ZM20 70V80H30V70H20ZM50 10H55V25H50V10ZM50 35H60V40H50V35ZM45 50H55V60H45V50ZM65 50H75V60H65V50ZM80 50H90V65H80V50ZM50 70H65V80H50V70ZM70 70H90V90H70V70Z" fill="#0F172A"/>
+              </svg>
+            </div>
+
+            <div>
+              <div id="sim-item-display" style="font-weight: 900; font-size: 1.125rem; color: #FFFFFF;">🔢 Scientific Calculator</div>
+              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--teal-light); margin-top: 2px;">Tag Code: <span id="sim-token-display">FL-8X92K</span></div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; width: 100%; margin-top: 0.25rem;">
+              <button id="sim-gen-btn" class="btn btn-navy" style="flex: 1; padding: 0.5rem 0.75rem; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.25); background: #1E293B; color: #FFFFFF; font-weight: 700;">🎲 New Token</button>
+              <a id="sim-scan-link" href="public/scan.html?token=FL-8X92K" class="btn btn-ghost-dark" style="flex: 1.4; padding: 0.5rem 0.75rem; font-size: 0.75rem; font-weight: 700; color: var(--teal-light); border-color: rgba(20, 184, 166, 0.5);">🔍 Test Scan View →</a>
+            </div>
+
+            <div style="font-size: 0.75rem; color: #94A3B8; background: rgba(15, 23, 42, 0.9); padding: 4px 10px; border-radius: var(--radius-full); border: 1px solid #334155;">
+              🛡️ Owner Details: <strong>100% Private</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONCEPTUAL FLOW -->
+      <div id="safety" class="glass-card" style="margin-top: 4rem; border-radius: var(--radius-xl); padding: 2rem; scroll-margin-top: 80px;">
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.25rem; text-align: center;">
+          The Safe FindLoop Recovery Journey (Campus Handover)
+        </h2>
+
+        <div class="grid-4" style="text-align: center;">
+          <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 1.25rem; border-radius: var(--radius-lg);">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🏷️</div>
+            <h3 style="font-size: 0.875rem; font-weight: 700; color: white;">Physical Item</h3>
+            <p style="font-size: 0.75rem; color: #94A3B8;">Tag attached</p>
+          </div>
+
+          <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 1.25rem; border-radius: var(--radius-lg);">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">📱</div>
+            <h3 style="font-size: 0.875rem; font-weight: 700; color: white;">Phone Scan</h3>
+            <p style="font-size: 0.75rem; color: #94A3B8;">No login needed</p>
+          </div>
+
+          <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 1.25rem; border-radius: var(--radius-lg);">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">📩</div>
+            <h3 style="font-size: 0.875rem; font-weight: 700; color: white;">Finder Report</h3>
+            <p style="font-size: 0.75rem; color: #94A3B8;">Anonymous note</p>
+          </div>
+
+          <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; padding: 1.25rem; border-radius: var(--radius-lg);">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🔑</div>
+            <h3 style="font-size: 0.875rem; font-weight: 700; color: white;">Returned</h3>
+            <p style="font-size: 0.75rem; color: #94A3B8;">6-digit code verified</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS SECTION -->
+  <section style="padding: 5rem 0; background-color: var(--bg-white);">
+    <div class="container">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto 1.75rem;" class="form-group">
+        <span class="badge badge-safe" style="align-self: center;">Simple 4-Step Process</span>
+        <h2 style="font-size: 2.25rem; font-weight: 900; color: var(--bg-navy-dark);">How FindLoop Works</h2>
+        <p style="color: var(--text-muted); font-size: 0.875rem;">No batteries, no app downloads for finders, zero public personal contact exposure.</p>
+      </div>
+
+      <div class="grid-4">
+        <div class="card" style="position: relative;">
+          <span style="font-family: var(--font-mono); font-size: 2rem; font-weight: 900; color: var(--text-light);">01</span>
+          <h3 style="font-size: 1.125rem; font-weight: 800; margin: 0.75rem 0 0.5rem;">Register your item</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Create a profile for your calculator, water bottle, or backpack in under 30 seconds.</p>
+        </div>
+
+        <div class="card" style="position: relative;">
+          <span style="font-family: var(--font-mono); font-size: 2rem; font-weight: 900; color: var(--text-light);">02</span>
+          <h3 style="font-size: 1.125rem; font-weight: 800; margin: 0.75rem 0 0.5rem;">Attach your QR tag</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Print or stick your unique FindLoop QR tag onto your belonging.</p>
+        </div>
+
+        <div class="card" style="position: relative;">
+          <span style="font-family: var(--font-mono); font-size: 2rem; font-weight: 900; color: var(--text-light);">03</span>
+          <h3 style="font-size: 1.125rem; font-weight: 800; margin: 0.75rem 0 0.5rem;">Someone finds & scans</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">A finder scans the code using any phone camera. No app download or login required.</p>
+        </div>
+
+        <div class="card" style="position: relative;">
+          <span style="font-family: var(--font-mono); font-size: 2rem; font-weight: 900; color: var(--text-light);">04</span>
+          <h3 style="font-size: 1.125rem; font-weight: 800; margin: 0.75rem 0 0.5rem;">You safely get it back</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Receive an instant report and collect your item at a secure campus desk using a 6-digit code.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY SHIELD SECTION -->
+  <section id="privacy" style="padding: 5rem 0; background-color: var(--bg-navy-dark); color: white; scroll-margin-top: 80px;">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;" class="grid-2">
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <span class="badge badge-safe" style="width: fit-content;">🛡️ Privacy Protection Guarantee</span>
+          <h2 style="font-size: 2.25rem; font-weight: 900; line-height: 1.2;">Your personal information stays 100% private.</h2>
+          <p style="color: #94A3B8; font-size: 0.875rem; line-height: 1.6;">
+            Traditional lost-and-found tags print phone numbers, emails, or student IDs directly on the tag. FindLoop uses secure random QR tokens so finders never access your personal identity.
+          </p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem; font-size: 0.875rem; color: #CBD5E1;">
+            <li>✓ The finder never sees your phone number, address, or student ID.</li>
+            <li>✓ Private distinguishing marks are strictly restricted to your owner account.</li>
+            <li>✓ Regenerate or deactivate any tag instantly if lost or compromised.</li>
+          </ul>
+        </div>
+
+        <div class="card-dark" style="padding: 2rem; border-radius: var(--radius-xl); display: flex; flex-direction: column; gap: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 1rem;">
+            <h3 style="font-size: 1rem; font-weight: 800;">Public Finder View</h3>
+            <span class="badge badge-safe">Owner Details Private</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="background: #0B1120; padding: 0.75rem; border-radius: var(--radius-sm); display: flex; justify-content: space-between;">
+              <span style="color: #94A3B8;">Owner Name:</span>
+              <span style="color: #64748B; font-style: italic;">[Hidden by Privacy Shield]</span>
+            </div>
+            <div style="background: #0B1120; padding: 0.75rem; border-radius: var(--radius-sm); display: flex; justify-content: space-between;">
+              <span style="color: #94A3B8;">Phone Number:</span>
+              <span style="color: #64748B; font-style: italic;">[Not exposed]</span>
+            </div>
+            <div style="background: #0B1120; padding: 0.75rem; border-radius: var(--radius-sm); display: flex; justify-content: space-between;">
+              <span style="color: #94A3B8;">Student ID / Email:</span>
+              <span style="color: #64748B; font-style: italic;">[Hidden]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background-color: #0B1120; color: #64748B; padding: 3rem 0; border-top: 1px solid #1E293B;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; font-size: 0.875rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+        <h3 style="color: white; font-weight: 800; font-size: 1.125rem; margin: 0;">FindLoop</h3>
+        <p style="font-size: 0.75rem; color: #94A3B8; margin: 0;">"Scan it. Report it. Return it."</p>
+      </div>
+      <nav style="display: flex; align-items: center; gap: 1.5rem;">
+        <a href="how-it-works.html">How It Works</a>
+        <a href="login.html">Owner Login</a>
+        <a href="admin/login.html">Admin Portal</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    const simInput = document.getElementById("sim-item-input");
+    const simDisplay = document.getElementById("sim-item-display");
+    const simTokenDisplay = document.getElementById("sim-token-display");
+    const simGenBtn = document.getElementById("sim-gen-btn");
+    const simScanLink = document.getElementById("sim-scan-link");
+    const chips = document.querySelectorAll(".sim-chip");
+
+    let currentIcon = "🔢";
+
+    function updateScanLink(token) {
+      if (simScanLink) {
+        simScanLink.href = `public/scan.html?token=${token}`;
+      }
+    }
+
+    if (simInput && simDisplay) {
+      simInput.addEventListener("input", (e) => {
+        const val = e.target.value.trim();
+        simDisplay.textContent = `${currentIcon} ${val.length > 0 ? val : "My Belonging"}`;
+      });
+    }
+
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chips.forEach(c => {
+          c.style.border = "1px solid rgba(255, 255, 255, 0.15)";
+          c.style.color = "#CBD5E1";
+          c.style.background = "rgba(15, 23, 42, 0.8)";
+        });
+        chip.style.border = "1px solid #14B8A6";
+        chip.style.color = "#14B8A6";
+        chip.style.background = "rgba(20, 184, 166, 0.25)";
+
+        const name = chip.getAttribute("data-name");
+        currentIcon = chip.getAttribute("data-icon");
+        simInput.value = name;
+        simDisplay.textContent = `${currentIcon} ${name}`;
+      });
+    });
+
+    if (simGenBtn && simTokenDisplay) {
+      simGenBtn.addEventListener("click", () => {
+        const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+        let newToken = "FL-";
+        for (let i = 0; i < 5; i++) {
+          newToken += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        simTokenDisplay.textContent = newToken;
+        updateScanLink(newToken);
+      });
+    }
+  </script>
+</body>
+</html>
