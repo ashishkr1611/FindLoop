@@ -29,13 +29,7 @@ export function getCurrentUser() {
       return null;
     }
   }
-  return {
-    uid: "usr_anshu_123",
-    name: "Anshubala",
-    email: "anshubala@gehu.ac.in",
-    studentId: "260122209",
-    role: "user"
-  };
+  return null;
 }
 
 // Auto-sync Firebase auth state with local storage session if Firebase initialized
