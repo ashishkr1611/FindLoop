@@ -2,6 +2,14 @@
 // FindLoop Campus System
 
 import { auth, db } from "./firebase-config.js";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { registerUserInSystem } from "./firestore.js";
 import { showToast } from "./utils.js";
 
