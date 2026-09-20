@@ -148,11 +148,14 @@ button, input, select, textarea {
   width: 38px;
   height: 38px;
   border-radius: var(--radius-md);
-  background-color: var(--bg-navy-dark);
-  color: var(--teal-light);
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border: 1px solid rgba(20, 184, 166, 0.4);
+  color: var(--teal-light, #14B8A6);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.25);
+  overflow: hidden;
 }
 
 .brand-text {
