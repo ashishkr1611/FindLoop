@@ -210,36 +210,64 @@ export async function getItemByIdOrToken(codeOrToken) {
   clean = clean.trim();
   const cleanUpper = clean.toUpperCase();
 
-  if (db) {
-    try {
-      // 1. Query by qrToken
-      const qTok = query(collection(db, "items"), where("qrToken", "==", clean));
-      const snapTok = await getDocs(qTok);
-      if (!snapTok.empty) return snapTok.docs[0].data();
-
-      // 2. Query by itemCode (uppercase)
-      const qCode = query(collection(db, "items"), where("itemCode", "==", cleanUpper));
-      const snapCode = await getDocs(qCode);
-      if (!snapCode.empty) return snapCode.docs[0].data();
-
-      // 3. Query by itemId
-      const qId = query(collection(db, "items"), where("itemId", "==", clean));
-      const snapId = await getDocs(qId);
-      if (!snapId.empty) return snapId.docs[0].data();
-    } catch (e) {
-      console.warn("Firestore item lookup error:", e);
-    }
-  }
-
+  // 1. Check local store FIRST for instant lookup & background cloud sync
   const store = getStore();
-  const found = store.items.find(
+  const localFound = store.items.find(
     (i) =>
       i.itemId === clean ||
       (i.itemCode && i.itemCode.toUpperCase() === cleanUpper) ||
       i.qrToken === clean ||
       (i.qrToken && i.qrToken.toLowerCase() === clean.toLowerCase())
   );
-  return found || null;
+
+  if (localFound) {
+    if (db) {
+      setDoc(doc(db, "items", localFound.itemId), localFound).catch((e) => console.warn("Background Firestore sync note:", e));
+    }
+    return localFound;
+  }
+
+  // 2. Check Cloud Firestore
+  if (db) {
+    try {
+      const qTok = query(collection(db, "items"), where("qrToken", "==", clean));
+      const snapTok = await getDocs(qTok);
+      if (!snapTok.empty) {
+        const item = snapTok.docs[0].data();
+        if (!store.items.some((i) => i.itemId === item.itemId)) {
+          store.items.unshift(item);
+          saveStore(store);
+        }
+        return item;
+      }
+
+      const qCode = query(collection(db, "items"), where("itemCode", "==", cleanUpper));
+      const snapCode = await getDocs(qCode);
+      if (!snapCode.empty) {
+        const item = snapCode.docs[0].data();
+        if (!store.items.some((i) => i.itemId === item.itemId)) {
+          store.items.unshift(item);
+          saveStore(store);
+        }
+        return item;
+      }
+
+      const qId = query(collection(db, "items"), where("itemId", "==", clean));
+      const snapId = await getDocs(qId);
+      if (!snapId.empty) {
+        const item = snapId.docs[0].data();
+        if (!store.items.some((i) => i.itemId === item.itemId)) {
+          store.items.unshift(item);
+          saveStore(store);
+        }
+        return item;
+      }
+    } catch (e) {
+      console.warn("Firestore item lookup error:", e);
+    }
+  }
+
+  return null;
 }
 
 export async function updateItemStatus(itemId, newStatus) {

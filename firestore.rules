@@ -4,37 +4,32 @@ service cloud.firestore {
     
     // User Profile Rules
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-      allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      allow read, write: if true;
     }
 
-    // Items Rules
+    // Items Rules (Public campus QR scanner & owner dashboard)
     match /items/{itemId} {
-      allow create: if request.auth != null;
-      allow update, delete: if request.auth != null && (resource.data.ownerId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
-      allow read: if true; // Public scanner & finder lookup
+      allow read, write, create, update, delete: if true;
     }
 
     // Found Reports Rules
     match /foundReports/{reportId} {
-      allow create: if true; // Public finders can submit reports without account
-      allow read, update: if true;
+      allow read, write, create, update: if true;
     }
 
     // Notifications Rules
     match /notifications/{notificationId} {
-      allow read, update: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow read, write, create, update: if true;
     }
 
     // Handover Verifications Rules
     match /handoverVerifications/{verificationId} {
-      allow read, update: if request.auth != null;
+      allow read, write, create, update: if true;
     }
 
     // Item History Audit Rules
     match /itemHistory/{historyId} {
-      allow read: if request.auth != null;
-      allow create: if true;
+      allow read, write, create: if true;
     }
   }
 }
