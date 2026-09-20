@@ -71,9 +71,9 @@
             <a href="signup.html" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1rem; border-radius: var(--radius-md);">
               Get Started Free →
             </a>
-            <a href="public/scan.html?token=FL-8X92K" class="btn btn-ghost-dark" style="padding: 1rem 2rem; font-size: 1rem; border-radius: var(--radius-md);">
-              🔍 Found Something? Test Scan
-            </a>
+            <button id="open-qr-scanner-btn" class="btn btn-ghost-dark" style="padding: 1rem 2rem; font-size: 1rem; border-radius: var(--radius-md); font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+              🔍 Found Something? Scan QR
+            </button>
           </div>
         </div>
 
@@ -181,10 +181,10 @@
             </div>
 
             <!-- Action Button below Tag -->
-            <a href="public/scan.html?token=FL-4AK9X2" class="btn btn-primary" style="margin-top: 1.25rem; width: 100%; justify-content: center; padding: 0.8rem 1rem; font-weight: 800; font-size: 0.875rem; border-radius: 12px; gap: 8px; box-shadow: 0 4px 14px rgba(20, 184, 166, 0.4);">
-              <span>🔍 Test Scan This Tag</span>
+            <button class="open-qr-scanner-btn btn btn-primary" style="margin-top: 1.25rem; width: 100%; justify-content: center; padding: 0.8rem 1rem; font-weight: 800; font-size: 0.875rem; border-radius: 12px; gap: 8px; box-shadow: 0 4px 14px rgba(20, 184, 166, 0.4); cursor: pointer;">
+              <span>📷 Open Camera Scanner</span>
               <span>→</span>
-            </a>
+            </button>
 
           </div>
 
@@ -322,7 +322,9 @@
 
   <script type="module">
     import { initMobileMenu } from "./js/utils.js";
+    import { initScannerButtons } from "./js/scanner.js";
     initMobileMenu();
+    initScannerButtons();
   </script>
 </body>
 </html>

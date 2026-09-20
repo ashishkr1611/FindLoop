@@ -489,3 +489,86 @@ button, input, select, textarea {
     display: none !important;
   }
 }
+
+/* REAL CAMERA QR SCANNER MODAL STYLES */
+.qr-scanner-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(11, 17, 32, 0.92);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.qr-scanner-modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.qr-scanner-modal-card {
+  background: #0F172A;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 440px;
+  padding: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+  text-align: center;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.qr-video-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 300px;
+  margin: 0 auto;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000000;
+  position: relative;
+  border: 2px solid rgba(20, 184, 166, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.qr-video-box video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.qr-scanner-guide {
+  position: absolute;
+  inset: 12%;
+  border: 2px dashed #14B8A6;
+  border-radius: 14px;
+  pointer-events: none;
+  box-shadow: 0 0 0 9999px rgba(11, 17, 32, 0.45);
+}
+
+.qr-scanner-laser {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #14B8A6, transparent);
+  box-shadow: 0 0 12px #14B8A6;
+  animation: scanLaser 2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes scanLaser {
+  0% { top: 12%; }
+  50% { top: 88%; }
+  100% { top: 12%; }
+}
