@@ -474,18 +474,85 @@ export async function getAllReportsAdmin() {
 }
 
 export async function getAllItemsAdmin() {
+  const store = getStore();
+  let cloudItems = [];
+
   if (db) {
     try {
       const snap = await getDocs(collection(db, "items"));
-      const items = [];
-      snap.forEach(doc => items.push(doc.data()));
-      if (items.length > 0) return items;
+      snap.forEach(doc => cloudItems.push(doc.data()));
     } catch (e) {
       console.warn("Firestore items fetch note:", e);
     }
   }
+
+  const itemMap = new Map();
+  if (store.items && Array.isArray(store.items)) {
+    store.items.forEach(item => {
+      if (item && (item.itemId || item.itemCode)) {
+        itemMap.set(item.itemId || item.itemCode, item);
+      }
+    });
+  }
+
+  cloudItems.forEach(item => {
+    if (item && (item.itemId || item.itemCode)) {
+      itemMap.set(item.itemId || item.itemCode, item);
+    }
+  });
+
+  const allItems = Array.from(itemMap.values());
+
+  if (db && allItems.length > 0) {
+    allItems.forEach(item => {
+      if (!cloudItems.some(ci => ci.itemId === item.itemId)) {
+        setDoc(doc(db, "items", item.itemId), item).catch(e => console.warn("Admin auto-sync item note:", e));
+      }
+    });
+  }
+
+  return allItems;
+}
+
+export async function getAllUsersAdmin() {
   const store = getStore();
-  return store.items;
+  let cloudUsers = [];
+
+  if (db) {
+    try {
+      const snap = await getDocs(collection(db, "users"));
+      snap.forEach(doc => cloudUsers.push(doc.data()));
+    } catch (e) {
+      console.warn("Firestore users fetch note:", e);
+    }
+  }
+
+  const userMap = new Map();
+  if (store.users && Array.isArray(store.users)) {
+    store.users.forEach(u => {
+      if (u && (u.uid || u.email)) {
+        userMap.set(u.uid || u.email, u);
+      }
+    });
+  }
+
+  cloudUsers.forEach(u => {
+    if (u && (u.uid || u.email)) {
+      userMap.set(u.uid || u.email, u);
+    }
+  });
+
+  const allUsers = Array.from(userMap.values());
+
+  if (db && allUsers.length > 0) {
+    allUsers.forEach(u => {
+      if (!cloudUsers.some(cu => cu.uid === u.uid)) {
+        setDoc(doc(db, "users", u.uid || `usr_${Date.now()}`), u).catch(e => console.warn("Admin auto-sync user note:", e));
+      }
+    });
+  }
+
+  return allUsers;
 }
 
 export async function getAdminStatsData() {
