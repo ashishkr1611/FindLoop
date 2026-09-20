@@ -70,8 +70,9 @@
               <p style="font-family: var(--font-mono); font-size: 0.85rem;" id="item-private-detail">Small scratch near top display corner</p>
             </div>
 
-            <div style="display: flex; gap: 0.75rem; border-top: 1px solid var(--border-light); padding-top: 1rem;">
+            <div style="display: flex; gap: 0.75rem; border-top: 1px solid var(--border-light); padding-top: 1rem; flex-wrap: wrap;">
               <button id="mark-lost-btn" class="btn btn-rose" style="font-size: 0.8rem;">Mark as Lost</button>
+              <button id="regen-qr-btn" class="btn btn-outline" style="font-size: 0.8rem; color: #F43F5E; border-color: rgba(244, 63, 94, 0.4);">🔄 Regenerate QR Token</button>
             </div>
           </div>
 
@@ -92,7 +93,7 @@
 
   <script type="module">
     import { requireAuth, logOutUser } from "../js/auth.js";
-    import { getItemByIdOrToken, updateItemStatus } from "../js/firestore.js";
+    import { getItemByIdOrToken, updateItemStatus, regenerateItemQRToken } from "../js/firestore.js";
     import { getQueryParam, showToast, getStatusBadgeHTML } from "../js/utils.js";
 
     const user = requireAuth();
@@ -149,6 +150,17 @@
         showToast("Item marked as LOST!");
         loadDetails();
       };
+
+      const regenBtn = document.getElementById("regen-qr-btn");
+      if (regenBtn) {
+        regenBtn.onclick = async () => {
+          if (confirm("Are you sure you want to regenerate this QR tag?\n\nThe old physical QR code printout will immediately stop working for safety.")) {
+            await regenerateItemQRToken(item.itemId);
+            showToast("New QR token generated!");
+            loadDetails();
+          }
+        };
+      }
     }
 
     loadDetails();

@@ -253,6 +253,47 @@ export async function updateItemStatus(itemId, newStatus) {
   }
 }
 
+export async function regenerateItemQRToken(itemId) {
+  const newQrToken = generateQRToken();
+  const timestamp = new Date().toISOString();
+
+  const store = getStore();
+  const item = store.items.find((i) => i.itemId === itemId);
+  if (item) {
+    item.qrToken = newQrToken;
+    item.updatedAt = timestamp;
+    store.history.unshift({
+      historyId: `hist_${Date.now()}`,
+      itemId,
+      action: "QR_REGENERATED",
+      description: "Regenerated new QR tag token. Old physical QR token deactivated.",
+      userId: item.ownerId,
+      timestamp
+    });
+    saveStore(store);
+  }
+
+  if (db) {
+    try {
+      await updateDoc(doc(db, "items", itemId), {
+        qrToken: newQrToken,
+        updatedAt: timestamp
+      });
+      await addDoc(collection(db, "itemHistory"), {
+        itemId,
+        action: "QR_REGENERATED",
+        description: "Regenerated new QR tag token. Old physical QR token deactivated.",
+        userId: item ? item.ownerId : "system",
+        timestamp
+      });
+    } catch (e) {
+      console.warn("Firestore regenerate QR token error:", e);
+    }
+  }
+
+  return newQrToken;
+}
+
 // 2. FOUND REPORTS & HANDOVER
 export async function submitFoundReportInFirestore(reportData) {
   const reportId = `rep_${Date.now()}`;
