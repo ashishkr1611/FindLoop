@@ -514,6 +514,31 @@ export async function getAllItemsAdmin() {
   return allItems;
 }
 
+export async function registerUserInSystem(userProfile) {
+  if (!userProfile || !userProfile.email) return;
+
+  const store = getStore();
+  if (!store.users) store.users = [];
+  
+  const existingIdx = store.users.findIndex(
+    (u) => (u.uid && u.uid === userProfile.uid) || (u.email && u.email.toLowerCase() === userProfile.email.toLowerCase())
+  );
+  if (existingIdx >= 0) {
+    store.users[existingIdx] = { ...store.users[existingIdx], ...userProfile };
+  } else {
+    store.users.unshift(userProfile);
+  }
+  saveStore(store);
+
+  if (db) {
+    try {
+      await setDoc(doc(db, "users", userProfile.uid || `usr_${Date.now()}`), userProfile);
+    } catch (e) {
+      console.warn("Firestore user sync error:", e);
+    }
+  }
+}
+
 export async function getAllUsersAdmin() {
   const store = getStore();
   let cloudUsers = [];
@@ -528,25 +553,43 @@ export async function getAllUsersAdmin() {
   }
 
   const userMap = new Map();
+
+  // 1. Seed user
+  if (SEED_USER) userMap.set(SEED_USER.email.toLowerCase(), SEED_USER);
+
+  // 2. Local store users
   if (store.users && Array.isArray(store.users)) {
     store.users.forEach(u => {
       if (u && (u.uid || u.email)) {
-        userMap.set(u.uid || u.email, u);
+        userMap.set(u.email ? u.email.toLowerCase() : u.uid, u);
       }
     });
   }
 
+  // 3. Active session user
+  try {
+    const active = localStorage.getItem("findloop_active_user");
+    if (active) {
+      const parsedActive = JSON.parse(active);
+      if (parsedActive && (parsedActive.uid || parsedActive.email)) {
+        userMap.set(parsedActive.email ? parsedActive.email.toLowerCase() : parsedActive.uid, parsedActive);
+      }
+    }
+  } catch (e) {}
+
+  // 4. Cloud Firestore users
   cloudUsers.forEach(u => {
     if (u && (u.uid || u.email)) {
-      userMap.set(u.uid || u.email, u);
+      userMap.set(u.email ? u.email.toLowerCase() : u.uid, u);
     }
   });
 
   const allUsers = Array.from(userMap.values());
 
+  // Background cloud sync
   if (db && allUsers.length > 0) {
     allUsers.forEach(u => {
-      if (!cloudUsers.some(cu => cu.uid === u.uid)) {
+      if (!cloudUsers.some(cu => cu.uid === u.uid || (cu.email && u.email && cu.email.toLowerCase() === u.email.toLowerCase()))) {
         setDoc(doc(db, "users", u.uid || `usr_${Date.now()}`), u).catch(e => console.warn("Admin auto-sync user note:", e));
       }
     });

@@ -2,14 +2,7 @@
 // FindLoop Campus System
 
 import { auth, db } from "./firebase-config.js";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { registerUserInSystem } from "./firestore.js";
 import { showToast } from "./utils.js";
 
 const CURRENT_USER_KEY = "findloop_active_user";
@@ -40,12 +33,13 @@ if (auth) {
       if (!current || current.uid !== firebaseUser.uid) {
         const userProfile = {
           uid: firebaseUser.uid,
-          name: firebaseUser.displayName || current?.name || "Anshu Bala",
+          name: firebaseUser.displayName || current?.name || "Aashu Gupta",
           email: firebaseUser.email,
           studentId: current?.studentId || "260122209",
           role: firebaseUser.email?.includes("admin") ? "admin" : "user"
         };
         localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userProfile));
+        registerUserInSystem(userProfile);
       }
     }
   });
@@ -61,7 +55,6 @@ export async function signUpUser(name, email, studentId, password) {
       uid = userCred.user.uid;
     } catch (e) {
       console.warn("Firebase Auth Signup Note (Fallback to demo mode):", e.message);
-      // If live API key is invalid/unconfigured, proceed gracefully in demo mode
       if (e.code === "auth/api-key-not-valid" || e.message?.includes("api-key-not-valid")) {
         showToast("Demo Mode: Signed up locally", false);
       } else {
@@ -72,21 +65,22 @@ export async function signUpUser(name, email, studentId, password) {
 
   const userProfile = {
     uid,
-    name,
+    name: name || "Aashu Gupta",
     email,
-    studentId: studentId || "260122209",
+    studentId: studentId || "2601" + Math.floor(10000 + Math.random() * 90000).toString(),
     role: "user",
     createdAt: new Date().toISOString()
   };
 
   localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userProfile));
+  await registerUserInSystem(userProfile);
   showToast("Account created successfully!");
   return userProfile;
 }
 
 // User Login
 export async function logInUser(email, password) {
-  let uid = `usr_anshu_123`;
+  let uid = `usr_${Date.now()}`;
   let role = email.includes("admin") ? "admin" : "user";
 
   if (auth) {
@@ -106,32 +100,36 @@ export async function logInUser(email, password) {
 
   const userProfile = {
     uid,
-    name: role === "admin" ? "Campus Safety Admin" : (email.includes("anshu") ? "Anshu Bala" : email.split("@")[0]),
+    name: role === "admin" ? "Campus Safety Admin" : (email.includes("anshu") ? "Anshu Bala" : (email.includes("aashu") ? "Aashu Gupta" : email.split("@")[0])),
     email,
-    studentId: role === "admin" ? "260100001" : "260122209",
-    role
+    studentId: role === "admin" ? "260100001" : "2601" + Math.floor(10000 + Math.random() * 90000).toString(),
+    role,
+    createdAt: new Date().toISOString()
   };
 
   localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userProfile));
+  await registerUserInSystem(userProfile);
   return userProfile;
 }
 
 // Google Sign-In
 export async function logInWithGoogle() {
+  let userProfile;
   if (auth) {
     try {
       const provider = new GoogleAuthProvider();
       const userCred = await signInWithPopup(auth, provider);
       const user = userCred.user;
-      const userProfile = {
+      userProfile = {
         uid: user.uid,
-        name: user.displayName || "Anshu Bala",
+        name: user.displayName || "Aashu Gupta",
         email: user.email,
         studentId: "2601" + Math.floor(10000 + Math.random() * 90000).toString(),
         role: "user",
         createdAt: new Date().toISOString()
       };
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userProfile));
+      await registerUserInSystem(userProfile);
       showToast("Signed in with Google!");
       return userProfile;
     } catch (e) {
@@ -145,14 +143,16 @@ export async function logInWithGoogle() {
   }
 
   // Fallback demo mode
-  const userProfile = {
-    uid: "usr_google_demo",
-    name: "Anshu Bala",
-    email: "anshubala@gehu.ac.in",
-    studentId: "260122209",
-    role: "user"
+  userProfile = {
+    uid: "usr_aashu_gupta",
+    name: "Aashu Gupta",
+    email: "aashugupta@gehu.ac.in",
+    studentId: "260199182",
+    role: "user",
+    createdAt: new Date().toISOString()
   };
   localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userProfile));
+  await registerUserInSystem(userProfile);
   return userProfile;
 }
 
