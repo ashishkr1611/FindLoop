@@ -145,6 +145,20 @@ export async function createItemInFirestore(itemData) {
     updatedAt: new Date().toISOString()
   };
 
+  // 1. Local Store sync (instant UI response & fallback)
+  const store = getStore();
+  store.items.unshift(newItem);
+  store.history.unshift({
+    historyId: `hist_${Date.now()}`,
+    itemId,
+    action: "CREATED",
+    description: "Registered item and generated QR tag.",
+    userId: newItem.ownerId,
+    timestamp: new Date().toISOString()
+  });
+  saveStore(store);
+
+  // 2. Firestore Cloud sync
   if (db) {
     try {
       await setDoc(doc(db, "items", itemId), newItem);
@@ -159,19 +173,6 @@ export async function createItemInFirestore(itemData) {
       console.warn("Firestore write error, falling back:", e);
     }
   }
-
-  // Local sync
-  const store = getStore();
-  store.items.unshift(newItem);
-  store.history.unshift({
-    historyId: `hist_${Date.now()}`,
-    itemId,
-    action: "CREATED",
-    description: "Registered item and generated QR tag.",
-    userId: newItem.ownerId,
-    timestamp: new Date().toISOString()
-  });
-  saveStore(store);
 
   return newItem;
 }
@@ -194,18 +195,34 @@ export async function getUserItems(ownerId) {
 
 export async function getItemByIdOrToken(codeOrToken) {
   if (!codeOrToken) return null;
-  const clean = decodeURIComponent(codeOrToken).trim();
+  let clean = decodeURIComponent(codeOrToken).trim();
+
+  // If clean is a full URL, extract token or id query param
+  if (clean.startsWith("http://") || clean.startsWith("https://")) {
+    try {
+      const url = new URL(clean);
+      clean = url.searchParams.get("token") || url.searchParams.get("id") || clean;
+    } catch (e) {
+      console.warn("URL parse warning:", e);
+    }
+  }
+
+  clean = clean.trim();
+  const cleanUpper = clean.toUpperCase();
 
   if (db) {
     try {
-      const qCode = query(collection(db, "items"), where("itemCode", "==", clean.toUpperCase()));
-      const snapCode = await getDocs(qCode);
-      if (!snapCode.empty) return snapCode.docs[0].data();
-
+      // 1. Query by qrToken
       const qTok = query(collection(db, "items"), where("qrToken", "==", clean));
       const snapTok = await getDocs(qTok);
       if (!snapTok.empty) return snapTok.docs[0].data();
 
+      // 2. Query by itemCode (uppercase)
+      const qCode = query(collection(db, "items"), where("itemCode", "==", cleanUpper));
+      const snapCode = await getDocs(qCode);
+      if (!snapCode.empty) return snapCode.docs[0].data();
+
+      // 3. Query by itemId
       const qId = query(collection(db, "items"), where("itemId", "==", clean));
       const snapId = await getDocs(qId);
       if (!snapId.empty) return snapId.docs[0].data();
@@ -218,8 +235,9 @@ export async function getItemByIdOrToken(codeOrToken) {
   const found = store.items.find(
     (i) =>
       i.itemId === clean ||
-      (i.itemCode && i.itemCode.toUpperCase() === clean.toUpperCase()) ||
-      i.qrToken === clean
+      (i.itemCode && i.itemCode.toUpperCase() === cleanUpper) ||
+      i.qrToken === clean ||
+      (i.qrToken && i.qrToken.toLowerCase() === clean.toLowerCase())
   );
   return found || null;
 }

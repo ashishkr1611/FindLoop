@@ -10,16 +10,15 @@ service cloud.firestore {
 
     // Items Rules
     match /items/{itemId} {
-      allow create, update, delete: if request.auth != null && request.auth.uid == resource.data.ownerId;
-      allow read: if resource.data.qrActive == true; // Public finder lookup
-      allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && (resource.data.ownerId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+      allow read: if true; // Public scanner & finder lookup
     }
 
     // Found Reports Rules
     match /foundReports/{reportId} {
       allow create: if true; // Public finders can submit reports without account
-      allow read, update: if request.auth != null;
-      allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      allow read, update: if true;
     }
 
     // Notifications Rules

@@ -31,7 +31,7 @@
 
     initScannerButtons();
 
-    const token = getQueryParam("token") || "FL-8X92K";
+    const token = getQueryParam("token") || getQueryParam("id") || "FL-8X92K";
 
     async function initScan() {
       const item = await getItemByIdOrToken(token);
