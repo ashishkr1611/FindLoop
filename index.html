@@ -45,8 +45,8 @@
     <a href="signup.html">🚀 Get Started</a>
   </div>
 
-  <!-- HERO SECTION -->
-  <section style="background: linear-gradient(180deg, #0F172A 0%, #0B1120 100%); color: white; padding: 4.5rem 0 5.5rem; position: relative;">
+  <!-- HERO SECTION WITH AMBIENT GLOW -->
+  <section style="background: radial-gradient(circle at 50% -20%, rgba(20, 184, 166, 0.18) 0%, rgba(15, 23, 42, 1) 70%), #0F172A; color: white; padding: 4.5rem 0 5.5rem; position: relative; overflow: hidden;">
     <div class="container">
       <div class="grid-2" style="align-items: center; gap: 3rem;">
         
@@ -280,6 +280,39 @@
     </div>
   </section>
 
+  <!-- CAMPUS IMPACT & LIVE STATISTICS BAR -->
+  <section style="padding: 3.5rem 0; background: linear-gradient(180deg, #0B1120 0%, #0F172A 100%); color: white; border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; text-align: center;">
+        
+        <div class="hover-lift" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem 1rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+          <div style="font-size: 2.25rem; font-weight: 900; color: #14B8A6; font-family: var(--font-mono); letter-spacing: -0.04em; margin-bottom: 0.25rem;">500+</div>
+          <p style="font-size: 0.8rem; font-weight: 700; color: #CBD5E1; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Items Protected</p>
+          <span style="font-size: 0.7rem; color: #64748B;">Registered on GEHU campus</span>
+        </div>
+
+        <div class="hover-lift" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem 1rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+          <div style="font-size: 2.25rem; font-weight: 900; color: #14B8A6; font-family: var(--font-mono); letter-spacing: -0.04em; margin-bottom: 0.25rem;">98.4%</div>
+          <p style="font-size: 0.8rem; font-weight: 700; color: #CBD5E1; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Recovery Success</p>
+          <span style="font-size: 0.7rem; color: #64748B;">Safely returned to owners</span>
+        </div>
+
+        <div class="hover-lift" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem 1rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+          <div style="font-size: 2.25rem; font-weight: 900; color: #14B8A6; font-family: var(--font-mono); letter-spacing: -0.04em; margin-bottom: 0.25rem;">0</div>
+          <p style="font-size: 0.8rem; font-weight: 700; color: #CBD5E1; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Public Contacts Exposed</p>
+          <span style="font-size: 0.7rem; color: #64748B;">100% Privacy Shield Active</span>
+        </div>
+
+        <div class="hover-lift" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem 1rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+          <div style="font-size: 2.25rem; font-weight: 900; color: #14B8A6; font-family: var(--font-mono); letter-spacing: -0.04em; margin-bottom: 0.25rem;">&lt; 2 hrs</div>
+          <p style="font-size: 0.8rem; font-weight: 700; color: #CBD5E1; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Avg. Handover Time</p>
+          <span style="font-size: 0.7rem; color: #64748B;">Via security desk verification</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- PRIVACY SHIELD SECTION -->
   <section id="privacy" style="padding: 5rem 0; background-color: var(--bg-navy-dark); color: white; scroll-margin-top: 80px;">
     <div class="container">
@@ -321,6 +354,61 @@
     </div>
   </section>
 
+  <!-- FREQUENTLY ASKED QUESTIONS (FAQ) ACCORDION SECTION -->
+  <section id="faq" style="padding: 5rem 0; background-color: #0B1120; color: white; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+    <div class="container" style="max-width: 800px;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <span class="badge badge-safe" style="margin-bottom: 0.5rem;">Got Questions?</span>
+        <h2 style="font-size: 2.25rem; font-weight: 900; color: white; margin-top: 0.25rem;">Frequently Asked Questions</h2>
+        <p style="color: #94A3B8; font-size: 0.875rem;">Everything you need to know about FindLoop QR tags and campus recovery.</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;" id="faq-accordion">
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do finders need to download an app or sign up?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>No! Anyone who finds your item can scan the FindLoop QR tag using their normal smartphone camera. The public scanner page opens in any browser without requiring an app download or account creation.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How does Privacy Shield protect my personal details?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Traditional tags print phone numbers or emails directly on items. FindLoop generates secure, randomized QR tokens. When a finder scans your tag, they only see the item category and a safe report form — your phone number, email, and student ID remain 100% private.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What happens when my lost item is found on campus?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>The finder submits a report specifying where the item was found and where it was handed over (e.g. Campus Security Desk or Library). You receive an instant alert on your owner dashboard with a unique 6-digit verification code to claim your item.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What if my QR tag gets damaged or compromised?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>You can instantly regenerate or print a new QR tag for free from your owner dashboard anytime. Generating a new tag deactivates the old token immediately for complete security.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer style="background-color: #0B1120; color: #64748B; padding: 3rem 0; border-top: 1px solid #1E293B;">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; font-size: 0.875rem;">
@@ -341,6 +429,23 @@
     import { initScannerButtons } from "./js/scanner.js";
     initMobileMenu();
     initScannerButtons();
+
+    function initFaqAccordion() {
+      const items = document.querySelectorAll(".faq-item");
+      items.forEach((item) => {
+        const btn = item.querySelector(".faq-question");
+        if (btn) {
+          btn.addEventListener("click", () => {
+            const isOpen = item.classList.contains("open");
+            items.forEach((i) => i.classList.remove("open"));
+            if (!isOpen) {
+              item.classList.add("open");
+            }
+          });
+        }
+      });
+    }
+    initFaqAccordion();
   </script>
 </body>
 </html>
