@@ -77,52 +77,117 @@
           </div>
         </div>
 
-        <!-- RIGHT COLUMN: LIVE TAG SIMULATOR / INTERACTIVE MOCKUP -->
-        <div class="glass-card" style="border-radius: var(--radius-xl); padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.12); padding-bottom: 1rem; margin-bottom: 0.25rem;">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-size: 1.25rem;">⚡</span>
-              <h2 style="font-size: 1.25rem; font-weight: 800; color: white; margin: 0;">Interactive Tag Sandbox</h2>
+        <!-- RIGHT COLUMN: PHYSICAL PRINTABLE TAG MOCKUP -->
+        <div class="glass-card" style="border-radius: 28px; padding: 2rem 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); overflow: hidden;">
+          
+          <!-- Outer Tag Frame -->
+          <div style="width: 100%; max-width: 320px; background: linear-gradient(145deg, #1E293B, #0F172A); padding: 1.5rem 1.25rem; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); text-align: center; position: relative;">
+            
+            <!-- WHITE INNER PRINTABLE TAG CARD -->
+            <div style="background: #FFFFFF; border-radius: 20px; padding: 1.75rem 1.25rem 1.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);">
+              
+              <!-- Brand Header -->
+              <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 1.25rem;">
+                <div style="width: 26px; height: 26px; background: #0F172A; border-radius: 6px; color: white; font-weight: 900; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; letter-spacing: -0.05em;">FL</div>
+                <span style="font-weight: 900; font-size: 1.15rem; color: #0F172A; letter-spacing: 0.05em; font-family: system-ui, -apple-system, sans-serif;">FINDLOOP</span>
+              </div>
+
+              <!-- QR Code Container -->
+              <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 0.75rem; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 1rem;">
+                <svg width="170" height="170" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="100" height="100" fill="white"/>
+                  <!-- Position Detection Patterns (Corners) -->
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8 8H36V36H8V8ZM14 14V30H30V14H14Z" fill="#0F172A"/>
+                  <rect x="18" y="18" width="8" height="8" fill="#0F172A"/>
+                  
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M64 8H92V36H64V8ZM70 14V30H86V14H70Z" fill="#0F172A"/>
+                  <rect x="74" y="18" width="8" height="8" fill="#0F172A"/>
+                  
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8 64H36V92H8V64ZM14 70V86H30V70H14Z" fill="#0F172A"/>
+                  <rect x="18" y="74" width="8" height="8" fill="#0F172A"/>
+                  
+                  <!-- Detailed QR Data Matrix -->
+                  <rect x="42" y="8" width="6" height="6" fill="#0F172A"/>
+                  <rect x="52" y="8" width="6" height="6" fill="#0F172A"/>
+                  <rect x="42" y="18" width="6" height="6" fill="#0F172A"/>
+                  <rect x="48" y="24" width="6" height="6" fill="#0F172A"/>
+                  <rect x="54" y="18" width="6" height="6" fill="#0F172A"/>
+                  <rect x="42" y="30" width="6" height="6" fill="#0F172A"/>
+                  <rect x="52" y="30" width="6" height="6" fill="#0F172A"/>
+
+                  <rect x="8" y="42" width="6" height="6" fill="#0F172A"/>
+                  <rect x="20" y="42" width="6" height="6" fill="#0F172A"/>
+                  <rect x="30" y="42" width="6" height="6" fill="#0F172A"/>
+                  <rect x="14" y="48" width="6" height="6" fill="#0F172A"/>
+                  <rect x="26" y="48" width="6" height="6" fill="#0F172A"/>
+                  <rect x="8" y="54" width="6" height="6" fill="#0F172A"/>
+                  <rect x="20" y="54" width="6" height="6" fill="#0F172A"/>
+                  <rect x="30" y="54" width="6" height="6" fill="#0F172A"/>
+
+                  <rect x="42" y="42" width="6" height="6" fill="#0F172A"/>
+                  <rect x="54" y="42" width="6" height="6" fill="#0F172A"/>
+                  <rect x="64" y="42" width="6" height="6" fill="#0F172A"/>
+                  <rect x="76" y="42" width="6" height="6" fill="#0F172A"/>
+                  <rect x="86" y="42" width="6" height="6" fill="#0F172A"/>
+                  <rect x="48" y="48" width="6" height="6" fill="#0F172A"/>
+                  <rect x="60" y="48" width="6" height="6" fill="#0F172A"/>
+                  <rect x="70" y="48" width="6" height="6" fill="#0F172A"/>
+                  <rect x="80" y="48" width="6" height="6" fill="#0F172A"/>
+                  <rect x="42" y="54" width="6" height="6" fill="#0F172A"/>
+                  <rect x="54" y="54" width="6" height="6" fill="#0F172A"/>
+                  <rect x="66" y="54" width="6" height="6" fill="#0F172A"/>
+                  <rect x="84" y="54" width="6" height="6" fill="#0F172A"/>
+
+                  <rect x="42" y="64" width="6" height="6" fill="#0F172A"/>
+                  <rect x="54" y="64" width="6" height="6" fill="#0F172A"/>
+                  <rect x="64" y="64" width="6" height="6" fill="#0F172A"/>
+                  <rect x="76" y="64" width="6" height="6" fill="#0F172A"/>
+                  <rect x="86" y="64" width="6" height="6" fill="#0F172A"/>
+                  <rect x="48" y="70" width="6" height="6" fill="#0F172A"/>
+                  <rect x="60" y="70" width="6" height="6" fill="#0F172A"/>
+                  <rect x="72" y="70" width="6" height="6" fill="#0F172A"/>
+                  <rect x="84" y="70" width="6" height="6" fill="#0F172A"/>
+                  <rect x="42" y="76" width="6" height="6" fill="#0F172A"/>
+                  <rect x="52" y="76" width="6" height="6" fill="#0F172A"/>
+                  <rect x="66" y="76" width="6" height="6" fill="#0F172A"/>
+                  <rect x="78" y="76" width="6" height="6" fill="#0F172A"/>
+                  <rect x="48" y="82" width="6" height="6" fill="#0F172A"/>
+                  <rect x="58" y="82" width="6" height="6" fill="#0F172A"/>
+                  <rect x="68" y="82" width="6" height="6" fill="#0F172A"/>
+                  <rect x="84" y="82" width="6" height="6" fill="#0F172A"/>
+                  <rect x="42" y="86" width="6" height="6" fill="#0F172A"/>
+                  <rect x="52" y="86" width="6" height="6" fill="#0F172A"/>
+                  <rect x="62" y="86" width="6" height="6" fill="#0F172A"/>
+                  <rect x="74" y="86" width="6" height="6" fill="#0F172A"/>
+                  <rect x="86" y="86" width="6" height="6" fill="#0F172A"/>
+                </svg>
+              </div>
+
+              <!-- Tag Text -->
+              <div style="margin-bottom: 0.75rem;">
+                <h4 style="font-weight: 800; font-size: 0.85rem; color: #0D9488; letter-spacing: 0.06em; margin: 0; text-transform: uppercase;">FOUND SOMETHING?</h4>
+                <p style="font-weight: 700; font-size: 0.725rem; color: #64748B; letter-spacing: 0.08em; margin: 3px 0 0; text-transform: uppercase;">SCAN TO REPORT</p>
+              </div>
+
+              <!-- Code Pill -->
+              <div style="background: #F1F5F9; border-radius: 8px; padding: 5px 14px; font-family: var(--font-mono); font-weight: 800; font-size: 0.825rem; color: #334155; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                FL-4AK9X2
+              </div>
+
+              <!-- Privacy Footer -->
+              <p style="font-size: 0.725rem; color: #94A3B8; font-weight: 500; margin: 0;">
+                Owner details stay private.
+              </p>
             </div>
-            <span class="badge badge-safe" style="font-size: 0.75rem; padding: 4px 12px; margin-left: 0.5rem;">Try Live Demo</span>
+
+            <!-- Action Button below Tag -->
+            <a href="public/scan.html?token=FL-4AK9X2" class="btn btn-primary" style="margin-top: 1.25rem; width: 100%; justify-content: center; padding: 0.8rem 1rem; font-weight: 800; font-size: 0.875rem; border-radius: 12px; gap: 8px; box-shadow: 0 4px 14px rgba(20, 184, 166, 0.4);">
+              <span>🔍 Test Scan This Tag</span>
+              <span>→</span>
+            </a>
+
           </div>
 
-          <!-- Preset Item Chips -->
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="sim-chips-container">
-            <button class="sim-chip btn btn-navy" data-name="Scientific Calculator" data-icon="🔢" style="padding: 5px 12px; font-size: 0.75rem; border: 1px solid #14B8A6; color: #14B8A6; background: rgba(20, 184, 166, 0.25);">🔢 Calculator</button>
-            <button class="sim-chip btn btn-navy" data-name="AirPods Pro Case" data-icon="🎧" style="padding: 5px 12px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: rgba(15, 23, 42, 0.8);">🎧 AirPods</button>
-            <button class="sim-chip btn btn-navy" data-name="Hydro Flask Bottle" data-icon="🍾" style="padding: 5px 12px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: rgba(15, 23, 42, 0.8);">🍾 Bottle</button>
-            <button class="sim-chip btn btn-navy" data-name="MacBook Pro 14" data-icon="💻" style="padding: 5px 12px; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.15); color: #CBD5E1; background: rgba(15, 23, 42, 0.8);">💻 Laptop</button>
-          </div>
-
-          <div class="form-group" style="text-align: left; margin-top: 0.85rem; margin-bottom: 0.25rem;">
-            <label style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; display: block; margin-bottom: 0.35rem;">Or type custom item name:</label>
-            <input type="text" id="sim-item-input" value="Scientific Calculator" placeholder="e.g. Water Bottle, Backpack..." class="form-input form-input-dark" style="background: #0B1120; border-color: rgba(20, 184, 166, 0.4); font-size: 0.875rem; padding: 0.6rem 1rem;">
-          </div>
-
-          <!-- Live Generated Tag Card -->
-          <div style="background: #0F172A; border: 1.5px solid rgba(20, 184, 166, 0.4); border-radius: var(--radius-lg); padding: 1.25rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
-            <div style="background: white; padding: 0.5rem; border-radius: var(--radius-sm); width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-              <svg width="85" height="85" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100" height="100" fill="white"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M10 10H40V40H10V10ZM20 20V30H30V20H20ZM60 10H90V40H60V10ZM70 20V30H80V20H70ZM10 60H40V90H10V60ZM20 70V80H30V70H20ZM50 10H55V25H50V10ZM50 35H60V40H50V35ZM45 50H55V60H45V50ZM65 50H75V60H65V50ZM80 50H90V65H80V50ZM50 70H65V80H50V70ZM70 70H90V90H70V70Z" fill="#0F172A"/>
-              </svg>
-            </div>
-
-            <div>
-              <div id="sim-item-display" style="font-weight: 900; font-size: 1.125rem; color: #FFFFFF;">🔢 Scientific Calculator</div>
-              <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--teal-light); margin-top: 2px;">Tag Code: <span id="sim-token-display">FL-8X92K</span></div>
-            </div>
-
-            <div style="display: flex; gap: 0.5rem; width: 100%; margin-top: 0.25rem;">
-              <button id="sim-gen-btn" class="btn btn-navy" style="flex: 1; padding: 0.5rem 0.75rem; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.25); background: #1E293B; color: #FFFFFF; font-weight: 700;">🎲 New Token</button>
-              <a id="sim-scan-link" href="public/scan.html?token=FL-8X92K" class="btn btn-ghost-dark" style="flex: 1.4; padding: 0.5rem 0.75rem; font-size: 0.75rem; font-weight: 700; color: var(--teal-light); border-color: rgba(20, 184, 166, 0.5);">🔍 Test Scan View →</a>
-            </div>
-
-            <div style="font-size: 0.75rem; color: #94A3B8; background: rgba(15, 23, 42, 0.9); padding: 4px 10px; border-radius: var(--radius-full); border: 1px solid #334155;">
-              🛡️ Owner Details: <strong>100% Private</strong>
-            </div>
-          </div>
         </div>
 
       </div>
@@ -255,59 +320,6 @@
     </div>
   </footer>
 
-  <script>
-    const simInput = document.getElementById("sim-item-input");
-    const simDisplay = document.getElementById("sim-item-display");
-    const simTokenDisplay = document.getElementById("sim-token-display");
-    const simGenBtn = document.getElementById("sim-gen-btn");
-    const simScanLink = document.getElementById("sim-scan-link");
-    const chips = document.querySelectorAll(".sim-chip");
-
-    let currentIcon = "🔢";
-
-    function updateScanLink(token) {
-      if (simScanLink) {
-        simScanLink.href = `public/scan.html?token=${token}`;
-      }
-    }
-
-    if (simInput && simDisplay) {
-      simInput.addEventListener("input", (e) => {
-        const val = e.target.value.trim();
-        simDisplay.textContent = `${currentIcon} ${val.length > 0 ? val : "My Belonging"}`;
-      });
-    }
-
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        chips.forEach(c => {
-          c.style.border = "1px solid rgba(255, 255, 255, 0.15)";
-          c.style.color = "#CBD5E1";
-          c.style.background = "rgba(15, 23, 42, 0.8)";
-        });
-        chip.style.border = "1px solid #14B8A6";
-        chip.style.color = "#14B8A6";
-        chip.style.background = "rgba(20, 184, 166, 0.25)";
-
-        const name = chip.getAttribute("data-name");
-        currentIcon = chip.getAttribute("data-icon");
-        simInput.value = name;
-        simDisplay.textContent = `${currentIcon} ${name}`;
-      });
-    });
-
-    if (simGenBtn && simTokenDisplay) {
-      simGenBtn.addEventListener("click", () => {
-        const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-        let newToken = "FL-";
-        for (let i = 0; i < 5; i++) {
-          newToken += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        simTokenDisplay.textContent = newToken;
-        updateScanLink(newToken);
-      });
-    }
-  </script>
   <script type="module">
     import { initMobileMenu } from "./js/utils.js";
     initMobileMenu();
