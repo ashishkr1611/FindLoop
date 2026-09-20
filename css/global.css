@@ -572,3 +572,9 @@ button, input, select, textarea {
   50% { top: 88%; }
   100% { top: 12%; }
 }
+
+@media (max-width: 767px) {
+  .stepper-line {
+    display: none !important;
+  }
+}
