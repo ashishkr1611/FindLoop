@@ -142,60 +142,95 @@
     });
 
     async function loadDashboard() {
-      const items = await getUserItems(user.uid);
+      try {
+        const items = await getUserItems(user ? user.uid : null);
 
-      // Stats
-      document.getElementById("stat-total").textContent = items.length;
-      document.getElementById("stat-lost").textContent = items.filter(i => i.status === "LOST").length;
-      document.getElementById("stat-found").textContent = items.filter(i => i.status === "FOUND").length;
-      document.getElementById("stat-returned").textContent = items.filter(i => i.status === "RETURNED").length;
+        // Stats
+        if (document.getElementById("stat-total")) document.getElementById("stat-total").textContent = items.length;
+        if (document.getElementById("stat-lost")) document.getElementById("stat-lost").textContent = items.filter(i => i.status === "LOST").length;
+        if (document.getElementById("stat-found")) document.getElementById("stat-found").textContent = items.filter(i => i.status === "FOUND").length;
+        if (document.getElementById("stat-returned")) document.getElementById("stat-returned").textContent = items.filter(i => i.status === "RETURNED").length;
 
-      const grid = document.getElementById("items-grid");
-      grid.innerHTML = "";
+        const renderGrid = (itemList) => {
+          const grid = document.getElementById("items-grid");
+          if (!grid) return;
+          grid.innerHTML = "";
 
-      if (items.length === 0) {
-        grid.innerHTML = `
-          <div class="card" style="grid-column: 1/-1; text-align: center; padding: 3.5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); border: 2px dashed #CBD5E1; border-radius: 20px;">
-            <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(20, 184, 166, 0.1); border: 2px solid rgba(20, 184, 166, 0.3); display: flex; align-items: center; justify-content: center; font-size: 2.25rem;">
-              🏷️
-            </div>
-            <div style="max-width: 440px;">
-              <h4 style="font-size: 1.25rem; font-weight: 800; color: var(--bg-navy-dark); margin-bottom: 0.35rem;">No Belongings Tagged Yet</h4>
-              <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5;">Protect your calculator, water bottle, backpack, or keys in under 30 seconds with a privacy-first FindLoop QR tag.</p>
-            </div>
-            <a href="add-item.html" class="btn btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 900; font-size: 0.95rem; box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25);">
-              + Register My First Item in 30s →
-            </a>
-          </div>`;
-        return;
+          if (!itemList || itemList.length === 0) {
+            grid.innerHTML = `
+              <div class="card" style="grid-column: 1/-1; text-align: center; padding: 3.5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); border: 2px dashed #CBD5E1; border-radius: 20px;">
+                <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(20, 184, 166, 0.1); border: 2px solid rgba(20, 184, 166, 0.3); display: flex; align-items: center; justify-content: center; font-size: 2.25rem;">
+                  🏷️
+                </div>
+                <div style="max-width: 440px;">
+                  <h4 style="font-size: 1.25rem; font-weight: 800; color: var(--bg-navy-dark); margin-bottom: 0.35rem;">No Belongings Found</h4>
+                  <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5;">Protect your calculator, water bottle, backpack, or keys in under 30 seconds with a privacy-first FindLoop QR tag.</p>
+                </div>
+                <a href="add-item.html" class="btn btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 12px; font-weight: 900; font-size: 0.95rem; box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25);">
+                  + Register My First Item in 30s →
+                </a>
+              </div>`;
+            return;
+          }
+
+          itemList.forEach(item => {
+            const itemCard = document.createElement("div");
+            itemCard.className = "card";
+            itemCard.style.display = "flex";
+            itemCard.style.flexDirection = "column";
+            itemCard.style.justifyContent = "space-between";
+            itemCard.style.gap = "1rem";
+
+            itemCard.innerHTML = `
+              <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                  ${getStatusBadgeHTML(item.status)}
+                  <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-muted); background: #F1F5F9; padding: 2px 8px; border-radius: 6px;">${item.itemCode}</span>
+                </div>
+                <h4 style="font-size: 1.125rem; font-weight: 800; color: var(--bg-navy-dark); margin-top: 0.25rem;">${item.itemName}</h4>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">Category: <strong>${item.category}</strong> • Color: <strong>${item.color || 'Default'}</strong></p>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 0.75rem; font-size: 0.75rem; font-weight: 700;">
+                <a href="item-details.html?id=${item.itemId}" style="color: var(--primary-teal); font-weight: 800;">View Details →</a>
+                <a href="qr-tag.html?id=${item.itemId}" class="btn btn-navy" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">🖨️ QR Tag</a>
+              </div>
+            `;
+
+            grid.appendChild(itemCard);
+          });
+        };
+
+        renderGrid(items);
+
+        // Search input filter listener
+        const searchInput = document.getElementById("search-input");
+        if (searchInput) {
+          searchInput.addEventListener("input", (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+              renderGrid(items);
+            } else {
+              const filtered = items.filter(i => 
+                (i.itemName && i.itemName.toLowerCase().includes(query)) ||
+                (i.itemCode && i.itemCode.toLowerCase().includes(query)) ||
+                (i.category && i.category.toLowerCase().includes(query))
+              );
+              renderGrid(filtered);
+            }
+          });
+        }
+      } catch (e) {
+        console.error("Dashboard render error:", e);
+        const grid = document.getElementById("items-grid");
+        if (grid) {
+          grid.innerHTML = `
+            <div class="card" style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+              <p style="color: #E11D48; font-weight: 700;">Unable to load items right now.</p>
+              <button onclick="location.reload()" class="btn btn-navy" style="margin-top: 0.5rem; padding: 0.4rem 1rem;">Retry Loading</button>
+            </div>`;
+        }
       }
-
-      items.forEach(item => {
-        const itemCard = document.createElement("div");
-        itemCard.className = "card";
-        itemCard.style.display = "flex";
-        itemCard.style.flexDirection = "column";
-        itemCard.style.justifyContent = "space-between";
-        itemCard.style.gap = "1rem";
-
-        itemCard.innerHTML = `
-          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-              ${getStatusBadgeHTML(item.status)}
-              <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--text-muted); background: #F1F5F9; padding: 2px 8px; border-radius: 6px;">${item.itemCode}</span>
-            </div>
-            <h4 style="font-size: 1.125rem; font-weight: 800; color: var(--bg-navy-dark); margin-top: 0.25rem;">${item.itemName}</h4>
-            <p style="font-size: 0.75rem; color: var(--text-muted);">Category: <strong>${item.category}</strong> • Color: <strong>${item.color || 'Default'}</strong></p>
-          </div>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); padding-top: 0.75rem; font-size: 0.75rem; font-weight: 700;">
-            <a href="item-details.html?id=${item.itemId}" style="color: var(--primary-teal); font-weight: 800;">View Details →</a>
-            <a href="qr-tag.html?id=${item.itemId}" class="btn btn-navy" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">🖨️ QR Tag</a>
-          </div>
-        `;
-
-        grid.appendChild(itemCard);
-      });
     }
 
     loadDashboard();
